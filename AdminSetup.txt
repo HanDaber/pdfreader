@@ -1,0 +1,126 @@
+    7  sudo -v
+    8  ls /
+    9  ls /opt
+   10  cd /opt/
+   11  yum update
+   12  sudo yum update
+   13  sudo yum install libstdc++ autoconf automake libtool autoconf-archive pkg-config gcc gcc-c++ make libjpeg-devel libpng-devel libtiff-devel zlib-devel
+   14  sudo yum install libstdc++ autoconf automake libtool pkg-config gcc gcc-c++ make libjpeg-devel libpng-devel libtiff-devel zlib-devel
+   15  sudo yum group install "Development Tools"
+   16  ls
+   17  wget http://www.leptonica.com/source/leptonica-1.75.3.tar.gz
+   18  sudo wget http://www.leptonica.com/source/leptonica-1.75.3.tar.gz
+   19  sudo tar -zxvf leptonica-1.75.3.tar.gz
+   20  ls
+   21  sudo tar -zxvf leptonica-1.75.3.tar.gz
+   22  sudo wget http://www.leptonica.com/source/leptonica-1.75.3.tar.gz
+   23  sudo tar -zxvf leptonica-1.75.3.tar.gz
+   24  file leptonica-1.75.3.tar.gz
+   25  cat leptonica-1.75.3.tar.gz
+   26  ls
+   27  rm leptonica-1.75.3.tar.gz leptonica-1.75.3.tar.gz.1
+   28  ls
+   29  rm leptonica-1.75.3.tar.gz
+   30  sudo rm leptonica-1.75.3.tar.*
+   31  ls
+   32  sudo wget http://www.leptonica.org/source/leptonica-1.80.0.tar.gz
+   33  tar -zxvf leptonica-1.80.0.tar.gz
+   34  sudo tar -zxvf leptonica-1.80.0.tar.gz
+   35  ls
+   36  sudo rm leptonica-1.80.0.tar.gz
+   37  cd leptonica-1.80.0/
+   38  ls
+   39  ls -l
+   40  ls -la
+   41  ./autogen.sh
+   42  sudo ./autogen.sh
+   43  sudo ./configure
+   44  sudo make -j
+   45  sudo make install
+   46  cd ..
+   47  ls
+   48  whereis libpng
+   49  ls /usr/local/include/
+   50  sudo wget https://github.com/tesseract-ocr/tesseract/archive/4.1.1.tar.gz
+   51  sudo wget http://github.com/tesseract-ocr/tesseract/archive/4.1.1.tar.gz
+   52  sudo apt-get install ca-certificates
+   53  sudo yum  install ca-certificates
+   54  sudo wget http://github.com/tesseract-ocr/tesseract/archive/4.1.1.tar.gz
+   55  sudo wget ERROR: The certificate of github.com is not trusted. http://github.com/tesseract-ocr/tesseract/archive/4.1.1.tar.gz
+   56  sudo wget --ca-directory=/usr/ssl/certs http://github.com/tesseract-ocr/tesseract/archive/4.1.1.tar.gz
+   57  sudo wget --no-check-certificate http://github.com/tesseract-ocr/tesseract/archive/4.1.1.tar.gz
+   58  file 4.1.1.tar.gz
+   59  tar -zxvf 4.1.1.tar.gz
+   60  sudo tar -zxvf 4.1.1.tar.gz
+   61  sudo rm 4.1.1.tar.gz
+   62  ls
+   63  cd tesseract-4.1.1/
+   64  ls -lah
+   65  sudo ./autogen.sh
+   66  PKG_CONFIG_PATH=/usr/local/lib/pkgconfig LIBLEPT_HEADERSDIR=/usr/local/include ./configure --with-extra-includes=/usr/local/include --with-extra-libraries=/usr/local/lib
+   67  sudo PKG_CONFIG_PATH=/usr/local/lib/pkgconfig LIBLEPT_HEADERSDIR=/usr/local/include ./configure
+   68  sudo LDFLAGS="-L/usr/local/lib" CFLAGS="-I/usr/local/include" make -j
+   69  sudo make install
+   70  ldconfig
+   71  sudo ldconfig
+   72  cd ..
+   73  ls
+   74  tesseract --version
+   75  sudo wget https://github.com/tesseract-ocr/tessdata/raw/master/eng.traineddata
+   76  sudo wget --no-check-certificate https://github.com/tesseract-ocr/tessdata/raw/master/eng.traineddata
+   77  sudo wget --no-check-certificate https://github.com/tesseract-ocr/tessdata/raw/master/equ.traineddata
+   78  ls
+   79  sudo mv *.traineddata /usr/local/share/tessdata/
+   80  ls
+   81  cd ..
+   82  cd ~
+   83  exit
+   84  cd /opt/
+   85  ls
+   86  sudo wget https://download.imagemagick.org/ImageMagick/download/linux/CentOS/x86_64/ImageMagick-7.0.10-57.x86_64.rpm
+   87  sudo wget https://download.imagemagick.org/ImageMagick/download/linux/CentOS/x86_64/ImageMagick-libs-7.0.10-57.x86_64.rpm
+   88  ls
+   89  rm -Uvh ImageMagick-7.0.10-57.x86_64.rpm
+   90  rpm -Uvh ImageMagick-7.0.10-57.x86_64.rpm
+   91  rpm -Uvh ImageMagick-libs-7.0.10-57.x86_64.rpm
+   92  sudo yum install ImageMagick
+   93  sudo yum install php-pear php-devel gcc
+   94  dnf
+
+--- not needed:
+   95  sudo yum install GraphicsMagick
+   96  sudo dnf install GraphicsMagick GraphicsMagick-devel GraphicsMagick-perl
+--- /not needed
+   
+   97  sudo yum install bzip2-devel freetype-devel libjpeg-devel libpng-devel libtiff-devel giflib-devel zlib-devel ghostscript-devel djvulibre-devel libwmf-devel jasper-devel libtool-ltdl-devel libX11-devel libXext-devel libXt-devel lcms-devel libxml2-devel librsvg2-devel OpenEXR-devel php-devel
+
+--- move to after libxml2:   
+   98  wget https://www.imagemagick.org/download/ImageMagick.tar.gz
+   99  sudo wget https://www.imagemagick.org/download/ImageMagick.tar.gz
+  100  tar -xvzf ImageMagick.tar.gz
+  101  sudo tar -xvzf ImageMagick.tar.gz
+  102  ls
+  103  cd ImageMagick-7.0.10-57
+  104  ls
+  105  sudo ./configure
+  106  sudo make
+  107  sudo make install
+  108  cd ..
+--- /move to after libxml2
+
+  109  ls
+  110  ls -lah
+  111  sudo rm ImageMagick.tar.gz ImageMagick-7.0.10-57.x86_64.rpm ImageMagick-libs-7.0.10-57.x86_64.rpm
+  112  ls
+  113  magick
+  114  magick --version
+  115 sudo yum install ghostscript
+
+  cd /opt
+  sudo wget https://download.imagemagick.org/ImageMagick/download/delegates/libxml2-2.9.6.tar.gz
+  sudo tar -xvzf libxml2-2.9.6.tar.gz
+  sudo chmod go+rx libxml2-2.9.6
+  cd libxml2-2.9.6
+  sudo ./autogen.sh
+  sudo make
+  sudo make install
