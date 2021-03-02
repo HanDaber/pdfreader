@@ -1,6 +1,6 @@
 # ML API
 
-import os, sys, http.client, urllib.request, urllib.parse, urllib.error, base64
+import os, sys, requests, http.client, urllib.request, urllib.parse, urllib.error, base64
 
 def main(*args):
     print("ML Analysis for Job")
@@ -30,6 +30,12 @@ def main(*args):
     filethere = os.popen("ls -l "+job_file_a)
     isfilethere = filethere.read()
     print(isfilethere)
+
+    url = 'https://westus2.api.cognitive.microsoft.com/customvision/v3.1/Prediction/aa3bd785-c90f-4d43-a8fc-1567467df42e/detect/iterations/3x3_phase1/image'
+
+    with open(job_file_a, 'rb') as finput:
+        response = requests.post(url, data=finput, headers=headers)
+        print(response.json())
 
     return "ok"
 

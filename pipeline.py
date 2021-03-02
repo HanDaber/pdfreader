@@ -8,12 +8,12 @@ import a05_analyze as analyze
 import a06_crop as crop
 import a07_extract as extract
 
-# job_id = "abc_123"
+job_id = "abc_123"
 # job_file_url = "https://mylam.lamresearch.com/wp-content/uploads/2018/03/cropped-cropped-lam_research_icon-32x32.png"
-# job_file_url = "https://www.arcat.com/cad/zurnind/221316_z9a-fd4.pdf"
+job_file_url = "https://www.arcat.com/cad/zurnind/221316_z9a-fd4.pdf"
 
-job_id = "bcd_234"
-job_file_url = "https://ed.iitm.ac.in/~raman/Autodesk%20Inventor%20Practice%20Part%20Drawings.pdf"
+# job_id = "bcd_234"
+# job_file_url = "https://ed.iitm.ac.in/~raman/Autodesk%20Inventor%20Practice%20Part%20Drawings.pdf"
 
 # got_jobs = query.main("abc", "123")
 # print(got_jobs)
