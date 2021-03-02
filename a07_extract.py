@@ -9,7 +9,10 @@ def main(*args):
     job_id = args[0]
     job_path = args[1]
 
-    print('NOOP')
+    ret = os.popen("tesseract "+job_path+job_id+"_WATWATWAT_-A-0_CROP_1.png stdout digits")
+    wat = ret.read()
+    print(wat)
+
     return "ok"
 
 if __name__ == '__main__':
