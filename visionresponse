@@ -1,0 +1,734 @@
+{
+    "id": "33a1e43b-6440-40ab-a1b8-52b90a58161d",
+    "project": "aa3bd785-c90f-4d43-a8fc-1567467df42e",
+    "iteration": "f5e7bb37-de14-45f6-a166-a73820d0f769",
+    "created": "2021-03-02T18:56:18.549Z",
+    "predictions": [
+        {
+            "probability": 0.35689536,
+            "tagId": "d5d24510-925d-4fd7-9956-96d1fffa5551",
+            "tagName": "diameter",
+            "boundingBox": {
+                "left": 0.049120963,
+                "top": 0.70111674,
+                "width": 0.020929873,
+                "height": 0.023733735
+            }
+        },
+        {
+            "probability": 0.28480545,
+            "tagId": "d5d24510-925d-4fd7-9956-96d1fffa5551",
+            "tagName": "diameter",
+            "boundingBox": {
+                "left": 0.022580221,
+                "top": 0.6985309,
+                "width": 0.02078525,
+                "height": 0.024050176
+            }
+        },
+        {
+            "probability": 0.20908828,
+            "tagId": "d5d24510-925d-4fd7-9956-96d1fffa5551",
+            "tagName": "diameter",
+            "boundingBox": {
+                "left": 0.08943136,
+                "top": 0.8762214,
+                "width": 0.01967974,
+                "height": 0.022480905
+            }
+        },
+        {
+            "probability": 0.10362104,
+            "tagId": "d5d24510-925d-4fd7-9956-96d1fffa5551",
+            "tagName": "diameter",
+            "boundingBox": {
+                "left": 0.12933575,
+                "top": 0.8745556,
+                "width": 0.017787546,
+                "height": 0.023112476
+            }
+        },
+        {
+            "probability": 0.10248292,
+            "tagId": "d5d24510-925d-4fd7-9956-96d1fffa5551",
+            "tagName": "diameter",
+            "boundingBox": {
+                "left": 0.3305789,
+                "top": 0.11949941,
+                "width": 0.01643923,
+                "height": 0.02080796
+            }
+        },
+        {
+            "probability": 0.097280584,
+            "tagId": "250cf4fb-b140-43df-853f-d79f83ba963d",
+            "tagName": "depth",
+            "boundingBox": {
+                "left": 0.09247337,
+                "top": 0.7001294,
+                "width": 0.016989239,
+                "height": 0.025161266
+            }
+        },
+        {
+            "probability": 0.0696952,
+            "tagId": "d5d24510-925d-4fd7-9956-96d1fffa5551",
+            "tagName": "diameter",
+            "boundingBox": {
+                "left": 0.25291654,
+                "top": 0.55828387,
+                "width": 0.017121375,
+                "height": 0.0236907
+            }
+        },
+        {
+            "probability": 0.067212045,
+            "tagId": "d5d24510-925d-4fd7-9956-96d1fffa5551",
+            "tagName": "diameter",
+            "boundingBox": {
+                "left": 0.3295225,
+                "top": 0.8782873,
+                "width": 0.017525852,
+                "height": 0.022418797
+            }
+        },
+        {
+            "probability": 0.06639199,
+            "tagId": "250cf4fb-b140-43df-853f-d79f83ba963d",
+            "tagName": "depth",
+            "boundingBox": {
+                "left": 0.12788323,
+                "top": 0.69660157,
+                "width": 0.015662238,
+                "height": 0.024157584
+            }
+        },
+        {
+            "probability": 0.06346475,
+            "tagId": "250cf4fb-b140-43df-853f-d79f83ba963d",
+            "tagName": "depth",
+            "boundingBox": {
+                "left": 0.1684198,
+                "top": 0.8755402,
+                "width": 0.014597967,
+                "height": 0.022781074
+            }
+        },
+        {
+            "probability": 0.049296886,
+            "tagId": "d5d24510-925d-4fd7-9956-96d1fffa5551",
+            "tagName": "diameter",
+            "boundingBox": {
+                "left": 0.29981947,
+                "top": 0.12231229,
+                "width": 0.019103438,
+                "height": 0.0180635
+            }
+        },
+        {
+            "probability": 0.04650747,
+            "tagId": "d5d24510-925d-4fd7-9956-96d1fffa5551",
+            "tagName": "diameter",
+            "boundingBox": {
+                "left": 0.08582802,
+                "top": 0.9401942,
+                "width": 0.018861428,
+                "height": 0.02099222
+            }
+        },
+        {
+            "probability": 0.045965828,
+            "tagId": "88717a06-b7e2-4b2f-88f4-2a3b0a09dbbd",
+            "tagName": "plusminusvertical",
+            "boundingBox": {
+                "left": 0.049757045,
+                "top": 0.93463856,
+                "width": 0.015258361,
+                "height": 0.021997094
+            }
+        },
+        {
+            "probability": 0.04400192,
+            "tagId": "d5d24510-925d-4fd7-9956-96d1fffa5551",
+            "tagName": "diameter",
+            "boundingBox": {
+                "left": 0.06352311,
+                "top": 0.33807918,
+                "width": 0.016364045,
+                "height": 0.022962779
+            }
+        },
+        {
+            "probability": 0.03694867,
+            "tagId": "d5d24510-925d-4fd7-9956-96d1fffa5551",
+            "tagName": "diameter",
+            "boundingBox": {
+                "left": 0.1684198,
+                "top": 0.8755402,
+                "width": 0.014597967,
+                "height": 0.022781074
+            }
+        },
+        {
+            "probability": 0.03678507,
+            "tagId": "250cf4fb-b140-43df-853f-d79f83ba963d",
+            "tagName": "depth",
+            "boundingBox": {
+                "left": 0.12933575,
+                "top": 0.8745556,
+                "width": 0.017787546,
+                "height": 0.023112476
+            }
+        },
+        {
+            "probability": 0.036734007,
+            "tagId": "d5d24510-925d-4fd7-9956-96d1fffa5551",
+            "tagName": "diameter",
+            "boundingBox": {
+                "left": 0.20936505,
+                "top": 0.87645704,
+                "width": 0.014947191,
+                "height": 0.02176869
+            }
+        },
+        {
+            "probability": 0.02961097,
+            "tagId": "88717a06-b7e2-4b2f-88f4-2a3b0a09dbbd",
+            "tagName": "plusminusvertical",
+            "boundingBox": {
+                "left": 0.09247337,
+                "top": 0.7001294,
+                "width": 0.016989239,
+                "height": 0.025161266
+            }
+        },
+        {
+            "probability": 0.02890707,
+            "tagId": "d5d24510-925d-4fd7-9956-96d1fffa5551",
+            "tagName": "diameter",
+            "boundingBox": {
+                "left": 0.055263497,
+                "top": 0.71739465,
+                "width": 0.01790049,
+                "height": 0.020113707
+            }
+        },
+        {
+            "probability": 0.027296495,
+            "tagId": "d5d24510-925d-4fd7-9956-96d1fffa5551",
+            "tagName": "diameter",
+            "boundingBox": {
+                "left": 0.09247337,
+                "top": 0.7001294,
+                "width": 0.016989239,
+                "height": 0.025161266
+            }
+        },
+        {
+            "probability": 0.022111876,
+            "tagId": "d5d24510-925d-4fd7-9956-96d1fffa5551",
+            "tagName": "diameter",
+            "boundingBox": {
+                "left": 0.059852254,
+                "top": 0.87765074,
+                "width": 0.01942033,
+                "height": 0.025380194
+            }
+        },
+        {
+            "probability": 0.020344205,
+            "tagId": "d5d24510-925d-4fd7-9956-96d1fffa5551",
+            "tagName": "diameter",
+            "boundingBox": {
+                "left": 0.12788323,
+                "top": 0.69660157,
+                "width": 0.015662238,
+                "height": 0.024157584
+            }
+        },
+        {
+            "probability": 0.02032114,
+            "tagId": "a3f5bba4-20b0-4b23-aebc-060eb17c1c4b",
+            "tagName": "perpendicular",
+            "boundingBox": {
+                "left": 0.43700334,
+                "top": 0.4411365,
+                "width": 0.04506883,
+                "height": 0.03937918
+            }
+        },
+        {
+            "probability": 0.018571083,
+            "tagId": "d5d24510-925d-4fd7-9956-96d1fffa5551",
+            "tagName": "diameter",
+            "boundingBox": {
+                "left": 0.15535508,
+                "top": 0.005455807,
+                "width": 0.024500906,
+                "height": 0.014021777
+            }
+        },
+        {
+            "probability": 0.017787555,
+            "tagId": "250cf4fb-b140-43df-853f-d79f83ba963d",
+            "tagName": "depth",
+            "boundingBox": {
+                "left": 0.3723651,
+                "top": 0.8780552,
+                "width": 0.016049713,
+                "height": 0.0246768
+            }
+        },
+        {
+            "probability": 0.017573839,
+            "tagId": "073cf2f0-ed1a-4f7b-b38e-3fc4f267b780",
+            "tagName": "flatness",
+            "boundingBox": {
+                "left": 0.43700334,
+                "top": 0.4411365,
+                "width": 0.04506883,
+                "height": 0.03937918
+            }
+        },
+        {
+            "probability": 0.016829874,
+            "tagId": "d5d24510-925d-4fd7-9956-96d1fffa5551",
+            "tagName": "diameter",
+            "boundingBox": {
+                "left": 0.24256507,
+                "top": 0.13346966,
+                "width": 0.018764317,
+                "height": 0.021407768
+            }
+        },
+        {
+            "probability": 0.015971782,
+            "tagId": "d5d24510-925d-4fd7-9956-96d1fffa5551",
+            "tagName": "diameter",
+            "boundingBox": {
+                "left": 0.3723651,
+                "top": 0.8780552,
+                "width": 0.016049713,
+                "height": 0.0246768
+            }
+        },
+        {
+            "probability": 0.01582398,
+            "tagId": "d5d24510-925d-4fd7-9956-96d1fffa5551",
+            "tagName": "diameter",
+            "boundingBox": {
+                "left": 0.089254364,
+                "top": 0.7137909,
+                "width": 0.017553784,
+                "height": 0.02349925
+            }
+        },
+        {
+            "probability": 0.015468868,
+            "tagId": "88717a06-b7e2-4b2f-88f4-2a3b0a09dbbd",
+            "tagName": "plusminusvertical",
+            "boundingBox": {
+                "left": 0.0128332125,
+                "top": 0.9418523,
+                "width": 0.011998794,
+                "height": 0.019333363
+            }
+        },
+        {
+            "probability": 0.014838091,
+            "tagId": "d5d24510-925d-4fd7-9956-96d1fffa5551",
+            "tagName": "diameter",
+            "boundingBox": {
+                "left": 0.090618365,
+                "top": 0.8617714,
+                "width": 0.017508544,
+                "height": 0.022295237
+            }
+        },
+        {
+            "probability": 0.014790236,
+            "tagId": "250cf4fb-b140-43df-853f-d79f83ba963d",
+            "tagName": "depth",
+            "boundingBox": {
+                "left": 0.20936505,
+                "top": 0.87645704,
+                "width": 0.014947191,
+                "height": 0.02176869
+            }
+        },
+        {
+            "probability": 0.014563307,
+            "tagId": "d5d24510-925d-4fd7-9956-96d1fffa5551",
+            "tagName": "diameter",
+            "boundingBox": {
+                "left": 0.13661617,
+                "top": 0.005666216,
+                "width": 0.023796469,
+                "height": 0.012356079
+            }
+        },
+        {
+            "probability": 0.013787954,
+            "tagId": "d5d24510-925d-4fd7-9956-96d1fffa5551",
+            "tagName": "diameter",
+            "boundingBox": {
+                "left": 0.29053834,
+                "top": 0.5614026,
+                "width": 0.018057048,
+                "height": 0.023810625
+            }
+        },
+        {
+            "probability": 0.013464112,
+            "tagId": "88717a06-b7e2-4b2f-88f4-2a3b0a09dbbd",
+            "tagName": "plusminusvertical",
+            "boundingBox": {
+                "left": 0.12788323,
+                "top": 0.69660157,
+                "width": 0.015662238,
+                "height": 0.024157584
+            }
+        },
+        {
+            "probability": 0.013357377,
+            "tagId": "88717a06-b7e2-4b2f-88f4-2a3b0a09dbbd",
+            "tagName": "plusminusvertical",
+            "boundingBox": {
+                "left": 0.1684198,
+                "top": 0.8755402,
+                "width": 0.014597967,
+                "height": 0.022781074
+            }
+        },
+        {
+            "probability": 0.012954572,
+            "tagId": "d5d24510-925d-4fd7-9956-96d1fffa5551",
+            "tagName": "diameter",
+            "boundingBox": {
+                "left": 0.092071615,
+                "top": 0.33964917,
+                "width": 0.016882509,
+                "height": 0.023871094
+            }
+        },
+        {
+            "probability": 0.012549414,
+            "tagId": "250cf4fb-b140-43df-853f-d79f83ba963d",
+            "tagName": "depth",
+            "boundingBox": {
+                "left": 0.16733827,
+                "top": 0.85878843,
+                "width": 0.022473827,
+                "height": 0.026935875
+            }
+        },
+        {
+            "probability": 0.012470954,
+            "tagId": "d5d24510-925d-4fd7-9956-96d1fffa5551",
+            "tagName": "diameter",
+            "boundingBox": {
+                "left": 0.4075837,
+                "top": 0.8771589,
+                "width": 0.015701711,
+                "height": 0.022274613
+            }
+        },
+        {
+            "probability": 0.012397089,
+            "tagId": "d5d24510-925d-4fd7-9956-96d1fffa5551",
+            "tagName": "diameter",
+            "boundingBox": {
+                "left": 0.57420295,
+                "top": 0.6980906,
+                "width": 0.01883316,
+                "height": 0.020301938
+            }
+        },
+        {
+            "probability": 0.011505637,
+            "tagId": "d5d24510-925d-4fd7-9956-96d1fffa5551",
+            "tagName": "diameter",
+            "boundingBox": {
+                "left": 0.12937532,
+                "top": 0.86032826,
+                "width": 0.020894602,
+                "height": 0.023813665
+            }
+        },
+        {
+            "probability": 0.011027975,
+            "tagId": "d5d24510-925d-4fd7-9956-96d1fffa5551",
+            "tagName": "diameter",
+            "boundingBox": {
+                "left": 0.2401289,
+                "top": 0.8789183,
+                "width": 0.019176662,
+                "height": 0.02207619
+            }
+        },
+        {
+            "probability": 0.010492743,
+            "tagId": "b9e764fc-dec3-4955-8665-180fcc7e6ad0",
+            "tagName": "countersink",
+            "boundingBox": {
+                "left": 0.022580221,
+                "top": 0.6985309,
+                "width": 0.02078525,
+                "height": 0.024050176
+            }
+        },
+        {
+            "probability": 0.0102266595,
+            "tagId": "88717a06-b7e2-4b2f-88f4-2a3b0a09dbbd",
+            "tagName": "plusminusvertical",
+            "boundingBox": {
+                "left": 0.12933575,
+                "top": 0.8745556,
+                "width": 0.017787546,
+                "height": 0.023112476
+            }
+        },
+        {
+            "probability": 0.009960471,
+            "tagId": "d5d24510-925d-4fd7-9956-96d1fffa5551",
+            "tagName": "diameter",
+            "boundingBox": {
+                "left": 0.049757045,
+                "top": 0.93463856,
+                "width": 0.015258361,
+                "height": 0.021997094
+            }
+        },
+        {
+            "probability": 0.009883598,
+            "tagId": "250cf4fb-b140-43df-853f-d79f83ba963d",
+            "tagName": "depth",
+            "boundingBox": {
+                "left": 0.29053834,
+                "top": 0.5614026,
+                "width": 0.018057048,
+                "height": 0.023810625
+            }
+        },
+        {
+            "probability": 0.009126696,
+            "tagId": "d5d24510-925d-4fd7-9956-96d1fffa5551",
+            "tagName": "diameter",
+            "boundingBox": {
+                "left": 0.44408488,
+                "top": 0.8746207,
+                "width": 0.01799661,
+                "height": 0.022810042
+            }
+        },
+        {
+            "probability": 0.00910801,
+            "tagId": "88717a06-b7e2-4b2f-88f4-2a3b0a09dbbd",
+            "tagName": "plusminusvertical",
+            "boundingBox": {
+                "left": 0.6524345,
+                "top": 0.009424258,
+                "width": 0.018743277,
+                "height": 0.015592311
+            }
+        },
+        {
+            "probability": 0.008464025,
+            "tagId": "d5d24510-925d-4fd7-9956-96d1fffa5551",
+            "tagName": "diameter",
+            "boundingBox": {
+                "left": 0.60256594,
+                "top": 0.6967606,
+                "width": 0.020510674,
+                "height": 0.022090018
+            }
+        },
+        {
+            "probability": 0.008244251,
+            "tagId": "250cf4fb-b140-43df-853f-d79f83ba963d",
+            "tagName": "depth",
+            "boundingBox": {
+                "left": 0.089254364,
+                "top": 0.7137909,
+                "width": 0.017553784,
+                "height": 0.02349925
+            }
+        },
+        {
+            "probability": 0.008196427,
+            "tagId": "d5d24510-925d-4fd7-9956-96d1fffa5551",
+            "tagName": "diameter",
+            "boundingBox": {
+                "left": 0.09007856,
+                "top": 0.9657109,
+                "width": 0.018456176,
+                "height": 0.01282084
+            }
+        },
+        {
+            "probability": 0.008190812,
+            "tagId": "e577db4c-dc7e-454b-a688-db02b68de33b",
+            "tagName": "parallelism",
+            "boundingBox": {
+                "left": 0.43700334,
+                "top": 0.4411365,
+                "width": 0.04506883,
+                "height": 0.03937918
+            }
+        },
+        {
+            "probability": 0.0076930313,
+            "tagId": "250cf4fb-b140-43df-853f-d79f83ba963d",
+            "tagName": "depth",
+            "boundingBox": {
+                "left": 0.092071615,
+                "top": 0.33964917,
+                "width": 0.016882509,
+                "height": 0.023871094
+            }
+        },
+        {
+            "probability": 0.00738315,
+            "tagId": "d5d24510-925d-4fd7-9956-96d1fffa5551",
+            "tagName": "diameter",
+            "boundingBox": {
+                "left": 0.17206196,
+                "top": 0.9885604,
+                "width": 0.019099906,
+                "height": 0.00762856
+            }
+        },
+        {
+            "probability": 0.0072223167,
+            "tagId": "88717a06-b7e2-4b2f-88f4-2a3b0a09dbbd",
+            "tagName": "plusminusvertical",
+            "boundingBox": {
+                "left": 0.3723651,
+                "top": 0.8780552,
+                "width": 0.016049713,
+                "height": 0.0246768
+            }
+        },
+        {
+            "probability": 0.006873279,
+            "tagId": "d5d24510-925d-4fd7-9956-96d1fffa5551",
+            "tagName": "diameter",
+            "boundingBox": {
+                "left": 0.56734157,
+                "top": 0.3986433,
+                "width": 0.017100513,
+                "height": 0.023078471
+            }
+        },
+        {
+            "probability": 0.006669753,
+            "tagId": "250cf4fb-b140-43df-853f-d79f83ba963d",
+            "tagName": "depth",
+            "boundingBox": {
+                "left": 0.25291654,
+                "top": 0.55828387,
+                "width": 0.017121375,
+                "height": 0.0236907
+            }
+        },
+        {
+            "probability": 0.006508544,
+            "tagId": "250cf4fb-b140-43df-853f-d79f83ba963d",
+            "tagName": "depth",
+            "boundingBox": {
+                "left": 0.006040126,
+                "top": 0.4787416,
+                "width": 0.26528588,
+                "height": 0.43985444
+            }
+        },
+        {
+            "probability": 0.0060474738,
+            "tagId": "d5d24510-925d-4fd7-9956-96d1fffa5551",
+            "tagName": "diameter",
+            "boundingBox": {
+                "left": 0.35813424,
+                "top": 0.12262199,
+                "width": 0.017864615,
+                "height": 0.020568796
+            }
+        },
+        {
+            "probability": 0.0060401745,
+            "tagId": "eca8fe1a-a759-4a0e-bddf-4f9d91b2276d",
+            "tagName": "surface",
+            "boundingBox": {
+                "left": 0.3603655,
+                "top": 0.49510142,
+                "width": 0.032067835,
+                "height": 0.029198378
+            }
+        },
+        {
+            "probability": 0.0056699123,
+            "tagId": "d5d24510-925d-4fd7-9956-96d1fffa5551",
+            "tagName": "diameter",
+            "boundingBox": {
+                "left": 0.0128332125,
+                "top": 0.9418523,
+                "width": 0.011998794,
+                "height": 0.019333363
+            }
+        },
+        {
+            "probability": 0.005376304,
+            "tagId": "a3f5bba4-20b0-4b23-aebc-060eb17c1c4b",
+            "tagName": "perpendicular",
+            "boundingBox": {
+                "left": 0.47358733,
+                "top": 0.44478512,
+                "width": 0.03365922,
+                "height": 0.03241405
+            }
+        },
+        {
+            "probability": 0.0052976585,
+            "tagId": "d5d24510-925d-4fd7-9956-96d1fffa5551",
+            "tagName": "diameter",
+            "boundingBox": {
+                "left": 0.21071744,
+                "top": 0.98832446,
+                "width": 0.01814118,
+                "height": 0.006919563
+            }
+        },
+        {
+            "probability": 0.005238606,
+            "tagId": "250cf4fb-b140-43df-853f-d79f83ba963d",
+            "tagName": "depth",
+            "boundingBox": {
+                "left": 0.0,
+                "top": 0.5985841,
+                "width": 0.32121086,
+                "height": 0.20376563
+            }
+        },
+        {
+            "probability": 0.005095165,
+            "tagId": "250cf4fb-b140-43df-853f-d79f83ba963d",
+            "tagName": "depth",
+            "boundingBox": {
+                "left": 0.20718987,
+                "top": 0.8541861,
+                "width": 0.021847457,
+                "height": 0.028785408
+            }
+        },
+        {
+            "probability": 0.005045067,
+            "tagId": "250cf4fb-b140-43df-853f-d79f83ba963d",
+            "tagName": "depth",
+            "boundingBox": {
+                "left": 0.12937532,
+                "top": 0.86032826,
+                "width": 0.020894602,
+                "height": 0.023813665
+            }
+        }
+    ]
+}
