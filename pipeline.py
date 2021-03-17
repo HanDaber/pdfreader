@@ -44,8 +44,6 @@ def main(*args):
     print(sliced_path)
     # sliced_path = job_path+"slices"
 
-    exit()
-
     for slice_file in glob.iglob(f'{sliced_path}/*.png'):
         print(f'Analyzing {slice_file}')
 

@@ -36,7 +36,10 @@ def main(*args):
     with open(job_file, 'rb') as finput:
         response_data = requests.post(url, data=finput, headers=headers)
         response = response_data.json()
-        with open(f'{job_id}/results/{job_file.replace("test_2/slices/", "").replace(".png", ".json")}', 'w') as outfile:
+
+        slice_results_file = job_file.replace(f'{job_id}/slices/', "").replace(".png", ".json")
+        # with open(f'{job_id}/results/{job_file.replace("test_2/slices/", "").replace(".png", ".json")}', 'w') as outfile:
+        with open(f'{job_id}/results/{slice_results_file}', 'w') as outfile:
             json.dump(response, outfile)
     
     # print("SKIPPING API CALL")
