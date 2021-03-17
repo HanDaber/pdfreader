@@ -31,7 +31,7 @@ def main(*args):
             value = results[-1]
             if value.startswith('0'):
                 value = f'0.{value}'
-            output += f'\n{tag}, {value}, {image_file_name}'
+            output += f'\n{job_id} {tag} {value} {image_file_name}'
     
     with open(f'{job_id}/results/values.txt', 'w') as outfile:
             outfile.write(output)
