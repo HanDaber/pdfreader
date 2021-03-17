@@ -7,12 +7,14 @@ def main(*args):
     print(" ".join(args))
 
     job_id = args[0]
-    job_path = args[1]
+    job_file = args[1]
 
     # https://westus2.api.cognitive.microsoft.com/customvision/v3.0/Prediction/aa3bd785-c90f-4d43-a8fc-1567467df42e/detect/iterations/3x3_phase1/image
     # Set Prediction-Key Header to : da69c82337ea46a1a5b53b517c48abfe
     # Set Content-Type Header to : application/octet-stream
     # Set Body to : <image file>
+    
+    url = 'https://westus2.api.cognitive.microsoft.com/customvision/v3.1/Prediction/aa3bd785-c90f-4d43-a8fc-1567467df42e/detect/iterations/3x3_phase1/image'
 
     headers = {
         # Request headers
@@ -25,36 +27,23 @@ def main(*args):
         'application': '{string}',
     })
 
-    job_file_a = job_path+job_id+"_WATWATWAT_-A-0.png"
+    # job_file = job_file+"slices/"+job_id+"-000_slice_0.png"
 
-    filethere = os.popen("ls -l "+job_file_a)
+    filethere = os.popen("ls "+job_file)
     isfilethere = filethere.read()
     print(isfilethere)
 
-    url = 'https://westus2.api.cognitive.microsoft.com/customvision/v3.1/Prediction/aa3bd785-c90f-4d43-a8fc-1567467df42e/detect/iterations/3x3_phase1/image'
-
-    with open(job_file_a, 'rb') as finput:
+    with open(job_file, 'rb') as finput:
         response_data = requests.post(url, data=finput, headers=headers)
         response = response_data.json()
-        print(response)
-        print(response['predictions'])
+        with open(f'{job_id}/results/{job_file.replace("test_2/slices/", "").replace(".png", ".json")}', 'w') as outfile:
+            json.dump(response, outfile)
+    
+    # print("SKIPPING API CALL")
+    # with open("example.json") as example:
+    #     response = json.load(example)
 
-    return "ok"
-
-    # url_path = "/customvision/v3.1/Prediction/aa3bd785-c90f-4d43-a8fc-1567467df42e/detect/iterations/3x3_phase1/image"
-
-    # try:
-    #     conn = http.client.HTTPSConnection('westus2.api.cognitive.microsoft.com')
-    #     conn.request("POST", url_path+"?%s" % params, open(job_file_a, "rb"), headers)
-    #     # conn.request("POST", "/customvision/v3.1/Prediction/aa3bd785-c90f-4d43-a8fc-1567467df42e/detect/iterations/3x3_phase1/image?%s" % params, "{body}", headers)
-    #     response = conn.getresponse()
-    #     data = response.read()
-    #     print("Data: "+str(data))
-    #     conn.close()
-    # except Exception as e:
-    #     print("[Errno {0}] {1}".format(e.errno, e.strerror))
-
-    # return "ok"
+    return response['id']
 
 if __name__ == '__main__':
-    main(sys.argv)
+    main(*sys.argv[1:])
