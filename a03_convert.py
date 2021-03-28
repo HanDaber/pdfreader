@@ -18,4 +18,4 @@ def main(*args):
     return "ok"
 
 if __name__ == '__main__':
-    main(sys.argv)
+    main(*sys.argv[1:])

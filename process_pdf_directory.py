@@ -12,7 +12,7 @@ def main(*args):
     print(f'PDF directory {pdf_dir}')
 
     for pdf_file in glob.iglob(f'{pdf_dir}/*.pdf'):
-        job_id = pdf_file.split(pdf_dir)[-1].split(".pdf")[0]
+        job_id = pdf_file.split(pdf_dir)[-1].split('/')[1].split(".pdf")[0]
         print(f'Running pipeline for job {job_id} on file {pdf_file}')
         ran_pipeline = pipeline.main(job_id, pdf_file)
         print(ran_pipeline)

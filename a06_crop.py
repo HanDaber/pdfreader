@@ -40,18 +40,21 @@ def main(*args):
         predictions = vision_results['predictions']
 
         for index, prediction in enumerate(predictions):
-            if prediction['probability'] < 0.25:
+            if prediction['probability'] < 0.2:
                 continue
             
             tag = prediction['tagName']
-            left = int(prediction['boundingBox']['left'] * 1300) - 75
-            top = int(prediction['boundingBox']['top'] * 1300) - 25
+            # left = int(prediction['boundingBox']['left'] * 1300) - 75
+            left = int(prediction['boundingBox']['left'] * 616) - 75
+            # top = int(prediction['boundingBox']['top'] * 1300) - 25
+            top = int(prediction['boundingBox']['top'] * 600) - 25
             width = 250
             height = 75
 
-            # print(tag, left, top, width, height)
+            print(tag, left, top, width, height)
 
-            cmd_convert = "magick convert "+results_file.replace("results", "slices").replace(".json", ".png")+" +repage -set filename:base '%[basename]' -crop "
+            result_slice = results_file.replace("results", "slices").replace(".json", ".png")
+            cmd_convert = "magick convert "+result_slice+" +repage -set filename:base '%[basename]' -crop "
             cmd_crop += " && "+cmd_convert+str(width)+"x"+str(height)+"+"+str(left)+"+"+str(top)+" "+cmd_filename+tag+"_"+str(index)+".png"
             # cmd_crop = cmd_convert+str(width)+"x"+str(height)+"+"+str(left)+"+"+str(top)+" "+cmd_filename+str(index)+".png"
 
@@ -63,4 +66,4 @@ def main(*args):
     return "ok"
 
 if __name__ == '__main__':
-    main(sys.argv)
+    main(*sys.argv[1:])

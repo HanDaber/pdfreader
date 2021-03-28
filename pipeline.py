@@ -16,6 +16,13 @@ def main(*args):
     job_id = args[0]
     pdf_path = args[1]
 
+    # set logging
+    # old_stdout = sys.stdout
+    # log_file = open(f'{job_id}/log',"w")
+    # sys.stdout = log_file
+
+    print(f'Job ID: {job_id}')
+
     # TEST RUNS:
     # job_id = "test_2"
     # job_file_url = "https://www.a.com/file.pdf"
@@ -60,6 +67,10 @@ def main(*args):
 
     extracted_values = extract.main(job_id, job_path)
     print(extracted_values)
+
+    # reset logging
+    # sys.stdout = old_stdout
+    # log_file.close()
 
     return job_path
 

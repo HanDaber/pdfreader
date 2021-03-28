@@ -9,11 +9,6 @@ def main(*args):
     job_id = args[0]
     job_path = args[1]
 
-    width = 1300
-    width_offset = 1150
-    height = 1300
-    height_offset = 900
-    """
     base_width = 3400
     base_height = 2200
     rows = 4
@@ -26,13 +21,13 @@ def main(*args):
 
     width = int(nominal_width) + width_overlap
     height = int(nominal_height) + height_overlap
-    """
+
     cmd_crop = "magick convert "+job_path+job_id+"-*.png -set filename:base '%[basename]' -crop "
     slices_path = job_path+"slices/"
 
     cmd_meta = "echo 'SLICING'"
     print_cmd_meta = ""
-    """
+
     for row in range(rows):
         height_offset = int(row * (nominal_height - (height_overlap/2)))
         for col in range(columns):
@@ -46,7 +41,15 @@ def main(*args):
     ret = os.popen(cmd_meta)
     wat = ret.read()
     print(wat)
+
+
+
     """
+    width = 1300
+    width_offset = 1150
+    height = 1300
+    height_offset = 900
+
     cmd_1 = cmd_crop + str(width)+"x"+str(height)+"+"+str(0)+"+"+str(0)+" "+slices_path+"%[filename:base]_slice_0-0.png"
     
     cmd_2 = cmd_crop + str(width)+"x"+str(height)+"+"+str(width_offset)+"+"+str(0)+" "+slices_path+"%[filename:base]_slice_0-1.png"
@@ -65,10 +68,9 @@ def main(*args):
     ret = os.popen(cmd_meta)
     wat = ret.read()
     print(wat)
-
-
+    """
 
     return slices_path
 
 if __name__ == '__main__':
-    main(sys.argv)
+    main(*sys.argv[1:])

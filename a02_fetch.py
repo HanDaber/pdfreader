@@ -53,4 +53,4 @@ def main(*args):
     return job_id+"/"
 
 if __name__ == '__main__':
-    main(sys.argv)
+    main(*sys.argv[1:])
