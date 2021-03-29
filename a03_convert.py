@@ -11,7 +11,7 @@ def main(*args):
     pdf_path = args[1]
 
     # ret = os.popen("magick convert -density 200 -quality 50 -alpha remove -resample 200 -antialias "+job_path+job_id+".pdf "+job_path+job_id+"-%03d.png")
-    ret = os.popen(f'magick convert -density 200 -quality 50 -alpha remove -resample 200 -antialias {pdf_path} {job_id}/{job_id}-%03d.png')
+    ret = os.popen(f'magick convert -density 200 -quality 50 -alpha remove -resample 200 -colorspace RGB -antialias {pdf_path} {job_id}/{job_id}-%03d.png')
     wat = ret.read()
     print(wat)
 

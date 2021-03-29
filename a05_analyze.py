@@ -40,7 +40,7 @@ def main(*args):
 
     response = {'id': 'DEBUG'}
 
-    debug = False
+    debug = True
     if debug:
         print("SKIPPING API CALL")
         # with open("example.json") as example:

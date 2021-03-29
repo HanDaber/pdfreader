@@ -40,7 +40,7 @@ def main(*args):
         predictions = vision_results['predictions']
 
         for index, prediction in enumerate(predictions):
-            if prediction['probability'] < 0.2:
+            if prediction['probability'] < 0.25:
                 continue
             
             tag = prediction['tagName']
@@ -55,7 +55,9 @@ def main(*args):
 
             result_slice = results_file.replace("results", "slices").replace(".json", ".png")
             cmd_convert = "magick convert "+result_slice+" +repage -set filename:base '%[basename]' -crop "
-            cmd_crop += " && "+cmd_convert+str(width)+"x"+str(height)+"+"+str(left)+"+"+str(top)+" "+cmd_filename+tag+"_"+str(index)+".png"
+            # cmd_crop += " && "+cmd_convert+str(width)+"x"+str(height)+"+"+str(left)+"+"+str(top)+" "+cmd_filename+tag+"_"+str(index)+".png"
+            cmd_crop += " && "+cmd_convert+str(width)+"x"+str(height)+"+"+str(left)+"+"+str(top)+" +repage -resize x600 +repage -sharpen 0x5.0 +repage "+cmd_filename+tag+"_"+str(index)+".png"
+            
             # cmd_crop = cmd_convert+str(width)+"x"+str(height)+"+"+str(left)+"+"+str(top)+" "+cmd_filename+str(index)+".png"
 
         print(cmd_crop)

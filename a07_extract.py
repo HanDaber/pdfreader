@@ -36,23 +36,29 @@ def main(*args):
         # if len(results) > 0:
             # value = results[-1]
         for x, value in enumerate(results):
-            print(value)
+            print(f'value: {value}')
             vals = [f'.{v}' for v in value.split('.') if v.rstrip()]
-            print(vals)
+            print(f'vals: {vals}')
 
             if len(vals) > 1:
                 v = format_value(vals[0])
-                print('v', v)
+                print(f'v: {v}')
                 for val in vals[1:]:
                     tolerance = format_value(val)
-                    print(tolerance)
-                    if float(tolerance) > 0:
-                        output += f'\n{index}-{x} {job_id} {tag}: {v} +/- {tolerance} @ probability ({image_file_name.split(".png")[0]})'
+                    print(f'tolerance: {tolerance}')
+                    try:
+                        if float(tolerance) > 0:
+                            output += f'\n{index}-{x} {job_id} {tag}: {v} +/- {tolerance} @ probability ({image_file_name.split(".png")[0]})'
+                    except ValueError:
+                        print(f'Could not parse tolerance: {tolerance}')
             else:
                 value = format_value(value)
                 print(value)
-                if float(value) > 0:
-                    output += f'\n{index}-{x} {job_id} {tag}: {value} @ probability ({image_file_name.split(".png")[0]})'
+                try:
+                    if float(value) > 0:
+                        output += f'\n{index}-{x} {job_id} {tag}: {value} @ probability ({image_file_name.split(".png")[0]})'
+                except ValueError:
+                    print(f'Could not parse value: {value}')
     
     with open(f'{job_id}/results/values.txt', 'w') as outfile:
             outfile.write(output)
