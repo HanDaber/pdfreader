@@ -40,9 +40,11 @@ def main(*args):
 
     response = {'id': 'DEBUG'}
 
-    debug = True
+    debug = False
     if debug:
         print("SKIPPING API CALL")
+        # with open("example.json") as example:
+            # response = json.load(example)
     else:
         with open(job_file, 'rb') as finput:
             response_data = requests.post(url, data=finput, headers=headers)
@@ -52,8 +54,6 @@ def main(*args):
 
             with open(f'{job_id}/results/{slice_results_file}', 'w') as outfile:
                 json.dump(response, outfile)
-    # with open("example.json") as example:
-        # response = json.load(example)
 
     return response['id']
 

@@ -22,7 +22,7 @@ def main(*args):
     width = int(nominal_width) + width_overlap
     height = int(nominal_height) + height_overlap
 
-    cmd_crop = "magick convert "+job_path+job_id+"-*.png -set filename:base '%[basename]' -crop "
+    cmd_crop = f'magick convert {job_path}{job_id}-*.png -set filename:base \'%[basename]\' -crop '
     slices_path = job_path+"slices/"
 
     cmd_meta = "echo 'SLICING'"

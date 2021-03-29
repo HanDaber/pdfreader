@@ -30,7 +30,7 @@ def main(*args):
     # job_file_a = job_path+"customvisionpdf14003.png"
     # results_path = job_path+"results/"
     cmd_crop = "echo 'CROPPING'"
-    cmd_filename = job_id+"/crops/"+"%[filename:base]_crop_"
+    cmd_filename = f'{job_id}/crops/%[filename:base]_crop_'
 
     # for results_file in glob.iglob(f'{results_path}/*.json'):
 

@@ -2,7 +2,7 @@
 
 import sys, os, glob, time
 # import a01_query as query
-import a02_fetch as fetch
+# import a02_fetch as fetch
 import a03_convert as convert
 import a04_slice as make_slices
 import a05_analyze as analyze
