@@ -24,16 +24,25 @@ def main(*args):
     job_id = args[0]
     pdf_path = args[1]
 
+    force_flag = False
+    try:
+        if args[2] == '--force' or args[2] == '-f':
+            force_flag = True
+    except:
+        pass
+
     print(f'Job ID: {job_id}')
 
     Jobs.init(db_name, table_name)
 
     try:
         Jobs.insert(db_name, table_name, (datetime.now(), job_id, 'PENDING', 10, 5.00))
-        Jobs.hydrate(db_name, table_name)
+        # Jobs.hydrate(db_name, table_name)
     except:
-        print("Job Exists")
-        # exit(0)
+        print("Job Exists!")
+        if not force_flag:
+            print("Exiting")
+            exit(0)
     
     all_jobs = Jobs.list_jobs(db_name, table_name)
 

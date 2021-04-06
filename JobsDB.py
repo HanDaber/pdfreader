@@ -54,13 +54,27 @@ def update_status(db_name, table_name, job_id, string_status):
         cur.execute(f'UPDATE {table_name} SET status = \'{string_status}\' WHERE job_id = \'{job_id}\'')
         con.commit()
 
-def insert_value(db_name, table_name, job_id, row_data):
+# def insert_value(db_name, table_name, job_id, row_data):
+#     with sqlite3.connect(f'{db_name}.db') as con:
+#         cur = con.cursor()
+
+#         row = [row_data]
+#         cur.execute(f'FUPDATE {table_name} WHERE \'job_id\' IS {job_id} VALUES ({value_placeholders})', row)
+#         con.commit()
+
+def find(db_name, table_name, job_id):
     with sqlite3.connect(f'{db_name}.db') as con:
         cur = con.cursor()
 
-        row = [row_data]
-        cur.execute(f'FUPDATE {table_name} WHERE \'job_id\' IS {job_id} VALUES ({value_placeholders})', row)
-        con.commit()
+        res = cur.execute(f'SELECT rowid, * FROM {table_name} WHERE job_id = \'{job_id}\'')
+        row = res.fetchone()
+        print(str(row))
+        it = iter(row)
+        print(str(it))
+        res_dct = dict(zip(labels, it))
+        print(str(res_dct))
+        # rows.append(res_dct)
+        return res_dct
 
 def list_jobs(db_name, table_name):
     rows = []

@@ -23,9 +23,10 @@ def index():
         # jobs.append(dict(job))
     return render_template('index.html', message=message, jobs=jobs)
 
-# class JobProcess(Resource):
-    # def get(self, job_id):
-    #     return {job_id: jobs[job_id]}
+class JobProcess(Resource):
+    def get(self, job_id):
+        found_job = Jobs.find(db_name, table_name, job_id)
+        return found_job
 
     # def put(self, job_id):
     #     jobs[job_id] = request.form['data']
@@ -48,7 +49,7 @@ class JobList(Resource):
 ## Actually setup the Api resource routing here
 ##
 api.add_resource(JobList, '/jobs')
-# api.add_resource(JobProcess, '/<string:job_id>')
+api.add_resource(JobProcess, '/jobs/<string:job_id>')
 
 if __name__ == '__main__':
     app.run(debug=True)
