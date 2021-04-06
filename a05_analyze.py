@@ -8,6 +8,8 @@ def main(*args):
 
     job_id = args[0]
     job_file = args[1]
+    
+    debug = True
 
     # https://westus2.api.cognitive.microsoft.com/customvision/v3.0/Prediction/aa3bd785-c90f-4d43-a8fc-1567467df42e/detect/iterations/3x3_phase1/image
     # Set Prediction-Key Header to : da69c82337ea46a1a5b53b517c48abfe
@@ -38,9 +40,8 @@ def main(*args):
     isfilethere = filethere.read()
     print(isfilethere)
 
-    response = {'id': 'DEBUG'}
+    response = {'id': 'NULL'}
 
-    debug = True
     if debug:
         print("SKIPPING API CALL")
         # with open("example.json") as example:

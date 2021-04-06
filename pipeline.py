@@ -1,6 +1,8 @@
 # main pipeline
 
 import sys, os, glob, time
+from datetime import datetime
+
 # import a01_query as query
 # import a02_fetch as fetch
 import a03_convert as convert
@@ -9,6 +11,12 @@ import a05_analyze as analyze
 import a06_crop as crop
 import a07_extract as extract
 
+import JobsDB as Jobs
+
+
+db_name = 'TEST_DB_1'
+table_name = 'test_table_1'
+
 def main(*args):
     print("Run Pipeline for Job")
     print(" ".join(args))
@@ -16,12 +24,20 @@ def main(*args):
     job_id = args[0]
     pdf_path = args[1]
 
-    # set logging
-    # old_stdout = sys.stdout
-    # log_file = open(f'{job_id}/log',"w")
-    # sys.stdout = log_file
-
     print(f'Job ID: {job_id}')
+
+    Jobs.init(db_name, table_name)
+
+    try:
+        Jobs.insert(db_name, table_name, (datetime.now(), job_id, 'PENDING', 10, 5.00))
+        Jobs.hydrate(db_name, table_name)
+    except:
+        print("Job Exists")
+        # exit(0)
+    
+    all_jobs = Jobs.list_jobs(db_name, table_name)
+
+    print(f'All Jobs: {all_jobs}')
 
     # TEST RUNS:
     # job_id = "test_2"
@@ -57,7 +73,7 @@ def main(*args):
         analyzed = analyze.main(job_id, slice_file.rstrip())
         print(f'{analyzed}\n')
 
-        time.sleep(0.25)
+        time.sleep(0.1)
 
     results_path = job_path+"results"
 
@@ -68,9 +84,11 @@ def main(*args):
     extracted_values = extract.main(job_id, job_path)
     print(extracted_values)
 
-    # reset logging
-    # sys.stdout = old_stdout
-    # log_file.close()
+    Jobs.update_status(db_name, table_name, job_id, 'COMPLETE')
+
+    all_jobs = Jobs.list_jobs(db_name, table_name)
+
+    print(f'All Jobs: {all_jobs}')
 
     return job_path
 
