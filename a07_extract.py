@@ -49,31 +49,33 @@ def main(*args):
                     try:
                         value = float(result_dict['text'])
 
-                        if value: # and int(val_prob) > 25:
-                            val_prob = result_dict['conf']
-                            val_bb = json.dumps({
-                                'left': result_dict['left'],
-                                'top': result_dict['top'],
-                                'width': result_dict['width'],
-                                'height': result_dict['height'],
-                            })
+                        # if value # is not None: # and int(val_prob) > 25:
+                        val_prob = result_dict['conf']
+                        val_bb = json.dumps({
+                            'left': result_dict['left'],
+                            'top': result_dict['top'],
+                            'width': result_dict['width'],
+                            'height': result_dict['height'],
+                        })
 
-                            # print(f"FOUND:\n\t{result_dict} - {image_file_name}\n")
-                            # print(f"Crop ({image_file_name}) Slice ({matched_results})")
-                            
-                            if value > 99 and value < 1000:
-                                value /= 1000
-                            
-                            # print(f"{value} @ {val_prob} - result_{str(index)}_{image_file_name}")
-                            
-                            for match in matched_results:
-                                print(f"ADDING SAVING:\n\t{match}\n")
-                                Results.add_value(match['rowid'], value, val_prob, val_bb)
-                    
+                        # print(f"FOUND:\n\t{result_dict} - {image_file_name}\n")
+                        # print(f"Crop ({image_file_name}) Slice ({matched_results})")
+                        
+                        if value > 99 and value < 1000:
+                            value /= 1000
+                        
+                        # print(f"{value} @ {val_prob} - result_{str(index)}_{image_file_name}")
+                        
+                        for match in matched_results:
+                            # print(f"ADDING SAVING:\n\t{match}\n")
+                            Results.add_value(match['rowid'], value, val_prob, val_bb)
+                
                     except KeyError as keyErr:
                         pass
                     except ValueError as valErr:
-                        # print(f"{valErr}")
+                        # for match in matched_results:
+                            # print(f"ADDING SAVING:\n\t{match}\n")
+                            # Results.add_value(match['rowid'], value, val_prob, val_bb)
                         pass
 
         continue

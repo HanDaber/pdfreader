@@ -36,10 +36,10 @@ def main(*args):
             cmd_meta += " && "+cmd
             print_cmd_meta += "\n"+cmd
 
-    # print(print_cmd_meta)
+    # print(cmd_meta)
     ret = os.popen(cmd_meta)
-    # wat = ret.read()
-    # print(wat)
+    wat = ret.read()
+    print(wat)
 
     return slices_path
 

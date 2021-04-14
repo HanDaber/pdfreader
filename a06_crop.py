@@ -63,8 +63,8 @@ def main(*args):
 
         # print(cmd_crop)
         ret = os.popen(f'{cmd_crop}')
-        # wat = ret.read()
-        # print(wat)
+        wat = ret.read()
+        print(wat)
 
     Results.insert_rows(collect_results) # ((job_id, index, tag, probability, json.dumps(boundingBox), result_slice_file, None, None, None))
 

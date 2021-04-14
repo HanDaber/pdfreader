@@ -41,10 +41,9 @@ def main(*args):
             page_file_page = page_file.split(job_path)[1].replace(".png", "")
 
             if page == page_file_page:
+
                 symbol = result['symbol']
                 symbol_probability = result['symbol_probability']
-                value = result['value']
-                value_probability = result['value_probability']
                 symbol_bounding_box = json.loads(result['symbol_bounding_box'])
                 sym_bb_left = symbol_bounding_box["left"]
                 sym_bb_top = symbol_bounding_box["top"]
@@ -78,22 +77,34 @@ def main(*args):
                 top = ((600 * page_row)) + int((sym_bb_top * 600)) - 50 * (page_row + 1)
                 if (page_row == 0):
                     top += 50
-                    text_top = '75'
+                    text_top = '70'
                 if (page_row == 1):
                     top += 25
-                    text_top = '-50'
+                    text_top = '-45'
                 if (page_row == 2):
                     top += 0
-                    text_top = '75'
+                    text_top = '70'
                 if (page_row == 3):
                     top += -25
-                    text_top = '-50'
+                    text_top = '-45'
                 right = int(left + (sym_bb_width * 616))
                 bottom = int(top + (sym_bb_height * 600))
 
                 # text_left = str(left) # '-75' if (symbol_bounding_box['left'] > 0.33) else '75'
                 # text_top = str(top) # '-45' if (symbol_bounding_box['top'] > 0.33) else '75'
-                text = f"'{symbol} ({symbol_probability})\n{value} ({value_probability})'"
+
+                value = result['value']
+                value_probability = result['value_probability']
+                value_bounding_box = result['value_bounding_box']
+                
+                text = f" 'Tag: {symbol} ({symbol_probability}) "
+                if value is None:
+                    text += "\nValue: Unknown' "
+                else:
+                    if value_probability is None:
+                        text += f"\nValue: {value} (Unknown)' "
+                    else:
+                        text += f"\nValue: {value} ({value_probability})' "
 
                 # print(f'R: {str(page_row)}; C: {str(page_col)}; S: {symbol}; L: {left}; R: {right}; Page: {page_file_page}')
 
@@ -103,19 +114,32 @@ def main(*args):
                 cmd += f' +repage -draw "'
                 cmd += f' fill rgba(255, 215, 0 , 0.25) stroke red stroke-width 1 roundrectangle {left - 75},{top - 25} {left - 75 + 250},{top - 25 + 75} 5,5'
                 cmd += f' fill none stroke red stroke-width 2 roundrectangle {left},{top} {right},{bottom} 5,5'
+                # if value_bounding_box is not None:
+                #     value_bounding_box = json.loads(value_bounding_box)
+                #     val_bb_left = int(value_bounding_box["left"]) / 1000
+                #     val_bb_top = int(value_bounding_box["top"]) / 1000
+                #     val_bb_width = int(value_bounding_box["width"]) / 1000
+                #     val_bb_height = int(value_bounding_box["height"]) / 1000
+                #     val_left = ((616 * page_col)) + int((val_bb_left * 616)) - 50 * (page_col + 1) - 50
+                #     val_top = ((600 * page_row)) + int((val_bb_top * 600)) - 50 * (page_row + 1) - 50
+                #     val_right = int(val_left + (val_bb_width * 616))
+                #     val_bottom = int(val_top + (val_bb_height * 600))
+                #     cmd += f' fill rgba(0, 215, 0 , 0.25) stroke navy stroke-width 2 roundrectangle {val_left},{val_top} {val_right},{val_bottom} 15,15'
                 cmd += f' fill red stroke red stroke-width 1 font Courier font-size 16 translate {text_left},{text_top} text {left},{top} {text}"'
                 
                 # cmd += f" -set filename:t '%d/%t_markup' '%[filename:t].png'"
 
         cmd += f" -set filename:t '%d/markup/%t_markup' '%[filename:t].png'"
-        print(cmd)
+        # print(cmd)
         ret = os.popen(f'{cmd}')
-        # wat = ret.read()
-        # print(wat)
+        wat = ret.read()
+        print(wat)
     
-    time.sleep(4)
+    # time.sleep(4)
     pdf_cmd = f"magick {job_path}markup/*.png {job_path}markup/{job_id}_markup.pdf"
     ret = os.popen(f'{pdf_cmd}')
+    wat = ret.read()
+    print(wat)
 
     return f'artifacts/{job_id}'
 

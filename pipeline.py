@@ -93,10 +93,9 @@ def main(*args):
 
     Jobs.update_status(job_id, 'ANALYZING')
     print(f'Job {job_id} ANALYZING')
+    # print("NOOPING")
     print(f'Analyzing {job_id}')
-    print("NOOPING")
     for slice_file in glob.iglob(f'{sliced_path}/*.png'):
-        # print(f'Analyzing {slice_file}')
         analyzed = analyze.main(job_id, slice_file.rstrip())
         time.sleep(0.1)
     print(f'Finished Analyzing {job_id}\n')
@@ -107,7 +106,6 @@ def main(*args):
     print(f"Results Path {sliced_path}")
     print(f'Cropping {job_id}')
     for results_file in glob.iglob(f'{results_path}/*.json'):
-        # print(f'Cropping {results_file}')
         cropped_values = crop.main(job_id, results_file.rstrip())
     print(f'Finished Cropping {job_id}\n')
 
@@ -132,7 +130,7 @@ def main(*args):
     # all_jobs = Jobs.list_jobs()
     # print(f'All Jobs: {all_jobs}')
 
-    dircleaned = os.popen(f'rm {job_path}slices/*.png {job_path}crops/*.png')
+    dircleaned = os.popen(f'rm -r {job_path}slices/ {job_path}crops/')
     cleaneddir = dircleaned.read().replace('\n', ' ')
     print(f"Cleanup Artifact Directories {cleaneddir}")
 
