@@ -46,7 +46,8 @@ def main(*args):
         print("Job Exists!")
         if not force_flag:
             print("Exiting")
-            exit(0)
+            return False
+            # exit(0)
     
     # all_jobs = Jobs.list_jobs()
     # print(f'All Jobs: {all_jobs}')
