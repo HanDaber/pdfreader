@@ -112,7 +112,7 @@ def main(*args):
                 # cmd = f'magick convert {job_path}slices/{result["slice_file"]}.png'
 
                 cmd += f' +repage -draw "'
-                cmd += f' fill rgba(255, 215, 0 , 0.25) stroke red stroke-width 1 roundrectangle {left - 75},{top - 25} {left - 75 + 250},{top - 25 + 75} 5,5'
+                cmd += f' fill rgba(255, 215, 0 , 0.1) stroke red stroke-width 1 roundrectangle {left - 75},{top - 25} {left - 75 + 250},{top - 25 + 75} 5,5'
                 cmd += f' fill none stroke red stroke-width 2 roundrectangle {left},{top} {right},{bottom} 5,5'
                 # if value_bounding_box is not None:
                 #     value_bounding_box = json.loads(value_bounding_box)
@@ -125,7 +125,7 @@ def main(*args):
                 #     val_right = int(val_left + (val_bb_width * 616))
                 #     val_bottom = int(val_top + (val_bb_height * 600))
                 #     cmd += f' fill rgba(0, 215, 0 , 0.25) stroke navy stroke-width 2 roundrectangle {val_left},{val_top} {val_right},{val_bottom} 15,15'
-                cmd += f' fill red stroke red stroke-width 1 font Courier font-size 16 translate {text_left},{text_top} text {left},{top} {text}"'
+                cmd += f' fill red stroke red stroke-width 1 font-size 16 translate {text_left},{text_top} text {left},{top} {text}"'
                 
                 # cmd += f" -set filename:t '%d/%t_markup' '%[filename:t].png'"
 
