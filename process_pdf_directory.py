@@ -14,7 +14,8 @@ def main(*args):
     for pdf_file in glob.iglob(f'{pdf_dir}/*.pdf'):
         job_id = pdf_file.split(pdf_dir)[-1].split('/')[1].split(".pdf")[0]
         print(f'Running pipeline for job {job_id} on file {pdf_file}')
-        ran_pipeline = pipeline.main(job_id, pdf_file)
+        # ran_pipeline = pipeline.main(job_id, pdf_file)
+        ran_pipeline = pipeline.main(pdf_file)
         print(ran_pipeline)
 
 if __name__ == '__main__':

@@ -1,17 +1,15 @@
-# wrap imagemagick for PDF to PNG conversion
+# wrap imagemagick for cropping
 
 import os, glob, sys, json
 
+import ResultsDB as Results
+
 def main(*args):
-    print("Crop out Values for Job")
-    print(" ".join(args))
+    # print("Crop out Values for Job")
+    # print(" ".join(args))
 
     job_id = args[0]
-    # job_path = args[1]
     results_file = args[1]
-    # response = args[2]
-
-    # predictions = response['predictions']
 
     # prediction = {
     #   "probability": 0.0,
@@ -26,44 +24,49 @@ def main(*args):
     #   "tagType": "Regular"
     # }
 
-    # job_file_a = job_path+"slices/"+job_id+"-000_slice_0.png"
-    # job_file_a = job_path+"customvisionpdf14003.png"
     # results_path = job_path+"results/"
-    cmd_crop = "echo 'CROPPING'"
-    cmd_filename = f'{job_id}/crops/%[filename:base]_crop_'
+    cmd_crop = f"echo 'CROPPING'"
+    cmd_filename = f'artifacts/{job_id}/crops/%[filename:base]_crop_'
 
-    # for results_file in glob.iglob(f'{results_path}/*.json'):
+    collect_results = []
 
     with open(results_file, 'rb') as finput:
-        print(results_file)
         vision_results = json.load(finput)
         predictions = vision_results['predictions']
 
         for index, prediction in enumerate(predictions):
-            if prediction['probability'] < 0.25:
+            probability = prediction['probability']
+
+            if probability < 0.5:
                 continue
-            
+
+            boundingBox = prediction['boundingBox']
             tag = prediction['tagName']
-            # left = int(prediction['boundingBox']['left'] * 1300) - 75
-            left = int(prediction['boundingBox']['left'] * 616) - 75
-            # top = int(prediction['boundingBox']['top'] * 1300) - 25
-            top = int(prediction['boundingBox']['top'] * 600) - 25
+            tagId = prediction['tagId']
+            # left = int(boundingBox['left'] * 1300) - 75
+            left = int(boundingBox['left'] * 616) - 75
+            # top = int(boundingBox['top'] * 1300) - 25
+            top = int(boundingBox['top'] * 600) - 25
             width = 250
             height = 75
 
-            print(tag, left, top, width, height)
-
             result_slice = results_file.replace("results", "slices").replace(".json", ".png")
-            cmd_convert = "magick convert "+result_slice+" +repage -set filename:base '%[basename]' -crop "
-            # cmd_crop += " && "+cmd_convert+str(width)+"x"+str(height)+"+"+str(left)+"+"+str(top)+" "+cmd_filename+tag+"_"+str(index)+".png"
-            cmd_crop += " && "+cmd_convert+str(width)+"x"+str(height)+"+"+str(left)+"+"+str(top)+" +repage -resize x600 +repage -sharpen 0x5.0 +repage "+cmd_filename+tag+"_"+str(index)+".png"
+            result_slice_file = result_slice.split("/")[-1].split(".")[0]
             
-            # cmd_crop = cmd_convert+str(width)+"x"+str(height)+"+"+str(left)+"+"+str(top)+" "+cmd_filename+str(index)+".png"
+            print(f"tag: ({index}):{tag}, probability: {probability}, left: {left}, top: {top}, width: {width}, height: {height}")
+            
+            # Results.insert((job_id, index, tag, probability, json.dumps(boundingBox), result_slice_file, None, None, None))
+            collect_results.append((job_id, index, tag, probability, json.dumps(boundingBox), result_slice_file, None, None, None))
 
-        print(cmd_crop)
-        ret = os.popen(cmd_crop)
-        wat = ret.read()
-        print(wat)
+            cmd_convert = "magick convert "+result_slice+" +repage -set filename:base '%[basename]' -crop "
+            cmd_crop += f" && {cmd_convert}{str(width)}x{str(height)}+{str(left)}+{str(top)} +repage -resize x600 +repage -sharpen 0x5.0 +repage {cmd_filename}{tag}_{str(index)}.png"
+
+        # print(cmd_crop)
+        ret = os.popen(f'{cmd_crop}')
+        # wat = ret.read()
+        # print(wat)
+
+    Results.insert_rows(collect_results) # ((job_id, index, tag, probability, json.dumps(boundingBox), result_slice_file, None, None, None))
 
     return "ok"
 

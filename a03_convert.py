@@ -3,19 +3,18 @@
 import sys, os
 
 def main(*args):
-    print("Convert PDF to PNG for Job")
-    print(" ".join(args))
+    print(f"Convert PDF to PNG for Job {' '.join(args)}")
 
     job_id = args[0]
     # job_path = args[1]
     pdf_path = args[1]
 
-    # ret = os.popen("magick convert -density 200 -quality 50 -alpha remove -resample 200 -antialias "+job_path+job_id+".pdf "+job_path+job_id+"-%03d.png")
-    ret = os.popen(f'magick convert -density 200 -quality 50 -alpha remove -resample 200 -colorspace RGB -antialias {pdf_path} {job_id}/{job_id}-%03d.png')
-    wat = ret.read()
-    print(wat)
+    params = '-density 200 -quality 50 -alpha remove -resample 200 -colorspace RGB -antialias'
+    ret = os.popen(f'magick convert {params} {pdf_path} artifacts/{job_id}/{job_id}-%03d.png')
+    # wat = ret.read()
+    # print(wat)
 
-    return "ok"
+    return f'artifacts/{job_id}'
 
 if __name__ == '__main__':
     main(*sys.argv[1:])
