@@ -40,12 +40,12 @@ def insert_rows(rows):
 def insert(row):
     insert_rows([row])
 
-def add_value(row_id, value, val_prob, val_bb):
+# def add_value(row_id, value, val_prob, val_bb):
+def add_value(row_id, value):
     with sqlite3.connect(f'{db_name}.db') as con:
         cur = con.cursor()
-
-        # row = [row_data]
-        cur.execute(f'UPDATE {table_name} SET value = \'{value}\', value_probability = \'{val_prob}\', value_bounding_box = \'{val_bb}\' WHERE rowid = \'{row_id}\'')
+        # cur.execute(f'UPDATE {table_name} SET value = \'{value}\', value_probability = \'{val_prob}\', value_bounding_box = \'{val_bb}\' WHERE rowid = \'{row_id}\'')
+        cur.execute(f'UPDATE {table_name} SET value = \'{value}\' WHERE rowid = \'{row_id}\'')
         con.commit()
 
 def find(job_id):
@@ -55,7 +55,7 @@ def find(job_id):
         cur = con.cursor()
 
         # print('FOUND ROWS')
-        cols = ['rowid', 'symbol', 'symbol_probability', 'symbol_bounding_box', 'slice_file', 'value', 'value_probability', 'value_bounding_box']
+        cols = ['rowid', 'symbol', 'symbol_id', 'symbol_probability', 'symbol_bounding_box', 'slice_file', 'value', 'value_probability', 'value_bounding_box']
         for row in cur.execute(f'SELECT {", ".join(cols)} FROM {table_name} WHERE job_id = \'{job_id}\''):
             # print(row)
             it = iter(row)

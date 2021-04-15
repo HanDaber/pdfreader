@@ -1,12 +1,3 @@
-# cron A -> query external jobs db and populate local jobs queue db 
-# cron B -> query local jobs queue db and for each -> call api on partNum
-# api -> call pipeline on partNum
-    # download/copy pdf -> convert -> slice -> analyze -> crop -> extract -> markup
-    # ^DB stages
-# process_pdf_directory -> pdf dirs (each) -> pipeline
-# api -> get jobs, status, results
-# ui -> templates + api
-
 # mark up values with imagemagick
 
 import sys, os, glob, json, time
@@ -95,7 +86,11 @@ def main(*args):
 
                 value = result['value']
                 value_probability = result['value_probability']
-                value_bounding_box = result['value_bounding_box']
+                value_bounding_box = json.loads(result['value_bounding_box'])
+                val_bb_left = value_bounding_box["left"]
+                val_bb_top = value_bounding_box["top"]
+                val_bb_width = value_bounding_box["width"]
+                val_bb_height = value_bounding_box["height"]
                 
                 text = f" 'Tag: {symbol} ({symbol_probability}) "
                 if value is None:
@@ -106,26 +101,17 @@ def main(*args):
                     else:
                         text += f"\nValue: {value} ({value_probability})' "
 
-                # print(f'R: {str(page_row)}; C: {str(page_col)}; S: {symbol}; L: {left}; R: {right}; Page: {page_file_page}')
+                draw_val_box = f'{left + sym_bb_width},{top} {left + sym_bb_width + val_bb_width},{top + val_bb_height}'
 
                 # from drawing onto sliced image
                 # cmd = f'magick convert {job_path}slices/{result["slice_file"]}.png'
 
                 cmd += f' +repage -draw "'
-                cmd += f' fill rgba(255, 215, 0 , 0.1) stroke red stroke-width 1 roundrectangle {left - 75},{top - 25} {left - 75 + 250},{top - 25 + 75} 5,5'
+                # cmd += f' fill rgba(255, 215, 0 , 0.1) stroke red stroke-width 1 roundrectangle {left - 75},{top - 25} {left - 75 + 250},{top - 25 + 75} 5,5'
+                cmd += f' fill rgba(255, 215, 0 , 0.1) stroke red stroke-width 1 roundrectangle {draw_val_box} 5,5'
+                # cmd += f' fill rgba(0, 215, 0 , 0.25) stroke navy stroke-width 1 roundrectangle {draw_val_box} 2,2'
                 cmd += f' fill none stroke red stroke-width 2 roundrectangle {left},{top} {right},{bottom} 5,5'
-                # if value_bounding_box is not None:
-                #     value_bounding_box = json.loads(value_bounding_box)
-                #     val_bb_left = int(value_bounding_box["left"]) / 1000
-                #     val_bb_top = int(value_bounding_box["top"]) / 1000
-                #     val_bb_width = int(value_bounding_box["width"]) / 1000
-                #     val_bb_height = int(value_bounding_box["height"]) / 1000
-                #     val_left = ((616 * page_col)) + int((val_bb_left * 616)) - 50 * (page_col + 1) - 50
-                #     val_top = ((600 * page_row)) + int((val_bb_top * 600)) - 50 * (page_row + 1) - 50
-                #     val_right = int(val_left + (val_bb_width * 616))
-                #     val_bottom = int(val_top + (val_bb_height * 600))
-                #     cmd += f' fill rgba(0, 215, 0 , 0.25) stroke navy stroke-width 2 roundrectangle {val_left},{val_top} {val_right},{val_bottom} 15,15'
-                cmd += f' fill red stroke red stroke-width 1 font-size 16 translate {text_left},{text_top} text {left},{top} {text}"'
+                cmd += f' fill red stroke red stroke-width 1 font-size 18 translate {text_left},{text_top} text {left},{top} {text}"'
                 
                 # cmd += f" -set filename:t '%d/%t_markup' '%[filename:t].png'"
 
@@ -133,33 +119,16 @@ def main(*args):
         # print(cmd)
         ret = os.popen(f'{cmd}')
         wat = ret.read()
-        print(wat)
+        # print(wat)
     
     # time.sleep(4)
     pdf_cmd = f"magick {job_path}markup/*.png {job_path}markup/{job_id}_markup.pdf"
     ret = os.popen(f'{pdf_cmd}')
     wat = ret.read()
-    print(wat)
+    # print(wat)
 
     return f'artifacts/{job_id}'
 
-
-# magick convert artifacts/715-022382-001_a/slices/715-022382-001_a-000_slice_0-1.png \
-# +repage -draw "fill tomato  circle 250,30 310,30 \
-# fill limegreen  circle 55,75 15,80 \
-# font Courier  font-size 72  decorate UnderLine \
-# fill dodgerblue  stroke navy  stroke-width 2 \
-# translate 10,110 rotate -15 text 0,0 ' yoyo ' \
-# fill none  circle 150,105 10,10 \
-# font Courier  font-size 12  decorate UnderLine \
-# fill dodgerblue  stroke navy  stroke-width 4 \
-# translate 10,10 rotate -15 text 0,0 ' cool ' " \
-# -set filename:t '%d/%t-change' '%[filename:t].png'
-
-
-# magick convert artifacts/715-022382-001_a/slices/715-022382-001_a-000_slice_2-1.png +repage -draw \
-# "fill rgba(255, 215, 0 , 0.25) stroke red stroke-width 1 roundrectangle 158,118 408,193 5,5 fill none stroke red stroke-width 2 roundrectangle 233,143 256,171 5,5 fill red stroke red stroke-width 1 font Courier font-size 14 translate -70,70 text 233.39971423999998,143.31154800000002 'diameter (0.7126751) \n0.250 (0.5)'" \
-# -set filename:t '%d/%t_markup' '%[filename:t].png'
 
 
 if __name__ == '__main__':

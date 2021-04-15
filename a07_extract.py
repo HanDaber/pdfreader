@@ -21,18 +21,18 @@ def main(*args):
 
         image_file_name = image_file.rstrip()
         job_file = job_path+"crops/"+image_file_name
-        tag = image_file_name.split("crop_")[-1].split("_")[0]
+        tag_and_id = image_file_name.split("crop_")[-1].split("_")
+        tag = tag_and_id[0]
+        tag_index = tag_and_id[1].split(".")[0]
 
-        matched_results = [result for result in results if result['slice_file'] in image_file_name]
+        matched_results = [result for result in results if result['slice_file'] in image_file_name and result['symbol'] == tag and result['symbol_id'] == tag_index]
 
-        # cmd = f'tesseract {job_file} stdout --oem 1 --dpi 72 digits'
-        # cmd = f'tesseract {job_file} {job_path}results/result_{str(index)}_{image_file_name} --oem 1 --psm 6 --dpi 300 quiet digits tsv'
         cmd = f'tesseract {job_file} {job_path}results/result_{str(index)}_{image_file_name} --oem 1 --psm 6 --dpi 300 -c tessedit_char_whitelist=.0123456789 quiet tsv'
         # print(f"Command: {cmd}\n")
 
         ret = os.popen(f'{cmd}')
         wat = ret.read().rstrip().lstrip().split('\n')
-        # print(f"Command results: {wat}")
+        # print(wat)
 
         with open(f'{job_path}results/result_{str(index)}_{image_file_name}.tsv') as f:
             lines = f.read().split('\n')[:-1]
@@ -46,79 +46,27 @@ def main(*args):
                     # print(f"data line {data}")
 
                     result_dict = dict(zip(column_names, data))
+
                     try:
-                        value = float(result_dict['text'])
+                        text = result_dict["text"]
+                        if text.startswith('0'):
+                            text = f'.{text}'
+                        if text.endswith('.'):
+                            text = text[:-1]
+                            
+                        # print(f'Try: {text}')
+                        value = float(text)
+                        # print(f'Value: {value}')
 
-                        # if value # is not None: # and int(val_prob) > 25:
-                        val_prob = result_dict['conf']
-                        val_bb = json.dumps({
-                            'left': result_dict['left'],
-                            'top': result_dict['top'],
-                            'width': result_dict['width'],
-                            'height': result_dict['height'],
-                        })
-
-                        # print(f"FOUND:\n\t{result_dict} - {image_file_name}\n")
-                        # print(f"Crop ({image_file_name}) Slice ({matched_results})")
-                        
-                        if value > 99 and value < 1000:
-                            value /= 1000
-                        
-                        # print(f"{value} @ {val_prob} - result_{str(index)}_{image_file_name}")
-                        
                         for match in matched_results:
-                            # print(f"ADDING SAVING:\n\t{match}\n")
-                            Results.add_value(match['rowid'], value, val_prob, val_bb)
+                            Results.add_value(match['rowid'], value) #, val_prob, val_bb)
                 
                     except KeyError as keyErr:
+                        # print(f'\n\tCaught KeyError: {keyErr}')
                         pass
                     except ValueError as valErr:
-                        # for match in matched_results:
-                            # print(f"ADDING SAVING:\n\t{match}\n")
-                            # Results.add_value(match['rowid'], value, val_prob, val_bb)
+                        print(f'\n\tCaught ValueError: {valErr}')
                         pass
-
-        continue
-    """
-        results = [result for result in wat if result.rstrip()]
-        print(index, results)
-
-        # if len(results) > 0:
-            # value = results[-1]
-        for x, value in enumerate(results):
-            print(f'value: {value}')
-            vals = [f'.{v}' for v in value.split('.') if v.rstrip()]
-            print(f'vals: {vals}')
-
-            if len(vals) > 1:
-                v = format_value(vals[0])
-                print(f'v: {v}')
-                for val in vals[1:]:
-                    tolerance = format_value(val)
-                    print(f'tolerance: {tolerance}')
-                    try:
-                        if float(tolerance) > 0:
-                            Values.insert((job_id, tag, 50, v, tolerance, tolerance))
-                            output += f'\n{index}-{x} {job_id} {tag}: {v} +/- {tolerance} @ probability ({image_file_name.split(".png")[0]})'
-                    except ValueError:
-                        print(f'Could not parse tolerance: {tolerance}')
-            else:
-                value = format_value(value)
-                print(value)
-                try:
-                    if float(value) > 0:
-                        Values.insert((job_id, tag, 50, value, None, None))
-                        output += f'\n{index}-{x} {job_id} {tag}: {value} @ probability ({image_file_name.split(".png")[0]})'
-                except ValueError:
-                    print(f'Could not parse value: {value}')
-
-
-
-    with open(f'artifacts/{job_id}/results/values.txt', 'w') as outfile:
-            outfile.write(output)
-
-    return "ok"
-    """
 
 def format_value(v):
     if v.startswith('0'):

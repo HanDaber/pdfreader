@@ -12,7 +12,7 @@ def main(*args):
     params = '-density 200 -quality 50 -alpha remove -resample 200 -colorspace RGB -antialias'
     ret = os.popen(f'magick convert {params} {pdf_path} artifacts/{job_id}/{job_id}-%03d.png')
     wat = ret.read()
-    print(wat)
+    # print(wat)
 
     return f'artifacts/{job_id}'
 

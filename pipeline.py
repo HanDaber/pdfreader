@@ -13,6 +13,7 @@ import a07_extract as extract
 import a08_markup as markup
 
 import JobsDB as Jobs
+import CropsDB as Crops
 import ResultsDB as Results
 import ArtifactsDB as Artifacts
 
@@ -31,6 +32,7 @@ def main(*args):
     print(f'Job ID: {job_id}')
 
     Jobs.init()
+    Crops.init()
     Results.init()
     Artifacts.init()
 
@@ -45,9 +47,8 @@ def main(*args):
     except:
         print("Job Exists!")
         if not force_flag:
-            print("Exiting")
+            print("Aborting")
             return False
-            # exit(0)
     
     # all_jobs = Jobs.list_jobs()
     # print(f'All Jobs: {all_jobs}')
@@ -79,27 +80,30 @@ def main(*args):
     dirmade = os.popen(f'mkdir -p {job_path} {job_path}slices {job_path}crops {job_path}results {job_path}markup && ls {job_path}')
     madedir = dirmade.read().replace('\n', ' ')
     print(f"Initialized Artifact Directories {madedir}")
-
+    """
     Jobs.update_status(job_id, 'CONVERTING')
     print(f'Job {job_id} CONVERTING')
     converted_files = convert.main(job_id, pdf_path)
-    print(f'Finished Converting {converted_files}\n')
+    print(f'\nFinished Converting {converted_files}\n')
 
     Jobs.update_status(job_id, 'SLICING')
     print(f'Job {job_id} SLICING')
     sliced_path = make_slices.main(job_id, job_path)
     print(f"Sliced Path {sliced_path}")
-    print(f'Finished Slicing {sliced_path}\n')
-    # sliced_path = job_path+"slices"
-
+    print(f'\nFinished Slicing {sliced_path}\n')
+    # """
+    sliced_path = job_path+"slices"
+    """
     Jobs.update_status(job_id, 'ANALYZING')
     print(f'Job {job_id} ANALYZING')
-    # print("NOOPING")
-    print(f'Analyzing {job_id}')
-    for slice_file in glob.iglob(f'{sliced_path}/*.png'):
-        analyzed = analyze.main(job_id, slice_file.rstrip())
-        time.sleep(0.1)
-    print(f'Finished Analyzing {job_id}\n')
+    if debug_flag:
+        print("\nNOOP\n")
+    else:
+        print(f'Analyzing {job_id}')
+        for slice_file in glob.iglob(f'{sliced_path}/*.png'):
+            analyzed = analyze.main(job_id, slice_file.rstrip())
+            time.sleep(0.1)
+        print(f'\nFinished Analyzing {job_id}\n')
 
     Jobs.update_status(job_id, 'CROPPING')
     print(f'Job {job_id} CROPPING')
@@ -108,32 +112,33 @@ def main(*args):
     print(f'Cropping {job_id}')
     for results_file in glob.iglob(f'{results_path}/*.json'):
         cropped_values = crop.main(job_id, results_file.rstrip())
-    print(f'Finished Cropping {job_id}\n')
-
+    print(f'\nFinished Cropping {job_id}\n')
+    """
     Jobs.update_status(job_id, 'EXTRACTING')
     print(f'Job {job_id} EXTRACTING')
     print(f'Extracting Values for {job_id}')
     extracted_values = extract.main(job_id, job_path)
-    print(f'Finished Extracting Values {extracted_values}\n')
+    print(f'\nFinished Extracting Values {extracted_values}\n')
 
     Jobs.update_status(job_id, 'MARKING')
     print(f'Job {job_id} MARKING')
     print(f'Marking up Drawings for {job_id}')
     marked_up_drawings_dir = markup.main(job_id, job_path)
-    print(f'Finished Marking up Drawings {marked_up_drawings_dir}\n')
-
+    print(f'\nFinished Marking up Drawings {marked_up_drawings_dir}\n')
+    # """
     Jobs.update_status(job_id, 'COMPLETE')
     print(f'Job {job_id} COMPLETE')
 
-    results = Results.find(job_id)
-    print(f'Results {results}'.replace("{", "\n\t{").replace("}", "}\n"))
+    # results = Results.find(job_id)
+    # print(f'Results {results}'.replace("{", "\n\t{").replace("}", "}\n"))
 
     # all_jobs = Jobs.list_jobs()
     # print(f'All Jobs: {all_jobs}')
 
-    dircleaned = os.popen(f'rm -r {job_path}slices/ {job_path}crops/')
-    cleaneddir = dircleaned.read().replace('\n', ' ')
-    print(f"Cleanup Artifact Directories {cleaneddir}")
+    if not debug_flag:
+        dircleaned = os.popen(f'rm -r {job_path}slices/ {job_path}crops/')
+        cleaneddir = dircleaned.read().replace('\n', ' ')
+        print(f"Cleanup Artifact Directories {cleaneddir}")
 
     return job_path
 

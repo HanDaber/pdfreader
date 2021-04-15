@@ -3,6 +3,9 @@
 import os, glob, sys, json
 
 import ResultsDB as Results
+import CropsDB as Crops
+
+MINIMUM_CONFIDENCE_THRESHOLD = 0.5
 
 def main(*args):
     # print("Crop out Values for Job")
@@ -24,11 +27,11 @@ def main(*args):
     #   "tagType": "Regular"
     # }
 
-    # results_path = job_path+"results/"
-    cmd_crop = f"echo 'CROPPING'"
+    cmd_crop = f"echo 'CROP' > /dev/null"
     cmd_filename = f'artifacts/{job_id}/crops/%[filename:base]_crop_'
 
     collect_results = []
+    collect_crops = []
 
     with open(results_file, 'rb') as finput:
         vision_results = json.load(finput)
@@ -37,36 +40,46 @@ def main(*args):
         for index, prediction in enumerate(predictions):
             probability = prediction['probability']
 
-            if probability < 0.5:
+            if probability < MINIMUM_CONFIDENCE_THRESHOLD:
                 continue
 
             boundingBox = prediction['boundingBox']
             tag = prediction['tagName']
             tagId = prediction['tagId']
-            # left = int(boundingBox['left'] * 1300) - 75
-            left = int(boundingBox['left'] * 616) - 75
-            # top = int(boundingBox['top'] * 1300) - 25
-            top = int(boundingBox['top'] * 600) - 25
-            width = 250
-            height = 75
+
+            left = int(boundingBox['left'] * 616) + int(boundingBox['width'] * 616) # - 5
+            top = int(boundingBox['top'] * 600) # - 5
+            width = int(boundingBox['width'] * 616) * 4
+            height = int(boundingBox['height'] * 600) # + 10
 
             result_slice = results_file.replace("results", "slices").replace(".json", ".png")
             result_slice_file = result_slice.split("/")[-1].split(".")[0]
             
-            print(f"tag: ({index}):{tag}, probability: {probability}, left: {left}, top: {top}, width: {width}, height: {height}")
+            # print(f"tag: ({index}):{tag}, probability: {probability}, left: {left}, top: {top}, width: {width}, height: {height}")
             
-            # Results.insert((job_id, index, tag, probability, json.dumps(boundingBox), result_slice_file, None, None, None))
-            collect_results.append((job_id, index, tag, probability, json.dumps(boundingBox), result_slice_file, None, None, None))
+            crop_image_file = f'{result_slice_file}_crop_{tag}_{str(index)}.png'
+            crop_data = (job_id, crop_image_file, left, top, width, height)
+            collect_crops.append(crop_data)
+
+            val_bb = json.dumps({
+                'left': left,
+                'top': top,
+                'width': width,
+                'height': height,
+            })
+            results_data = (job_id, index, tag, probability, json.dumps(boundingBox), result_slice_file, None, None, val_bb)
+            collect_results.append(results_data)
 
             cmd_convert = "magick convert "+result_slice+" +repage -set filename:base '%[basename]' -crop "
             cmd_crop += f" && {cmd_convert}{str(width)}x{str(height)}+{str(left)}+{str(top)} +repage -resize x600 +repage -sharpen 0x5.0 +repage {cmd_filename}{tag}_{str(index)}.png"
 
         # print(cmd_crop)
-        ret = os.popen(f'{cmd_crop}')
+        ret = os.popen(f'{cmd_crop} > /dev/null')
         wat = ret.read()
-        print(wat)
+        # print(wat)
 
     Results.insert_rows(collect_results) # ((job_id, index, tag, probability, json.dumps(boundingBox), result_slice_file, None, None, None))
+    Crops.insert_rows(collect_crops)
 
     return "ok"
 

@@ -8,18 +8,7 @@ def main(*args):
 
     job_id = args[0]
     job_file = args[1]
-    
-    debug = False
 
-    # https://westus2.api.cognitive.microsoft.com/customvision/v3.0/Prediction/aa3bd785-c90f-4d43-a8fc-1567467df42e/detect/iterations/3x3_phase1/image
-    # Set Prediction-Key Header to : da69c82337ea46a1a5b53b517c48abfe
-    # Set Content-Type Header to : application/octet-stream
-    # Set Body to : <image file>
-    
-    # v1
-    # url = 'https://westus2.api.cognitive.microsoft.com/customvision/v3.1/Prediction/aa3bd785-c90f-4d43-a8fc-1567467df42e/detect/iterations/3x3_phase1/image'
-    
-    # v2
     url = 'https://westus2.api.cognitive.microsoft.com/customvision/v3.1/Prediction/f1b76c02-5fc5-4f7d-bb13-2d4b4bc71a27/detect/iterations/Iteration1/image'
 
     headers = {
@@ -31,27 +20,16 @@ def main(*args):
         'application': '{string}',
     })
 
-    print(url)
-
-    filethere = os.popen("ls "+job_file)
-    isfilethere = filethere.read()
-    print(isfilethere)
-
     response = {'id': 'NULL'}
 
-    if debug:
-        print("SKIPPING API CALL")
-        # with open("example.json") as example:
-            # response = json.load(example)
-    else:
-        with open(job_file, 'rb') as finput:
-            response_data = requests.post(url, data=finput, headers=headers)
-            response = response_data.json()
+    with open(job_file, 'rb') as finput:
+        response_data = requests.post(url, data=finput, headers=headers)
+        response = response_data.json()
 
-            slice_results_file = job_file.replace(f'artifacts/{job_id}/slices/', "").replace(".png", ".json")
+        slice_results_file = job_file.replace(f'artifacts/{job_id}/slices/', "").replace(".png", ".json")
 
-            with open(f'artifacts/{job_id}/results/{slice_results_file}', 'w') as outfile:
-                json.dump(response, outfile)
+        with open(f'artifacts/{job_id}/results/{slice_results_file}', 'w') as outfile:
+            json.dump(response, outfile)
 
     return response['id']
 
