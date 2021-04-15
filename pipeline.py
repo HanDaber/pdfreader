@@ -59,8 +59,6 @@ def main(*args):
     # job_id = "bcd_234"
     # job_file_url = "https://ed.iitm.ac.in/~raman/Autodesk%20Inventor%20Practice%20Part%20Drawings.pdf"
 
-
-
     # QUERY FOR JOBS - keep
     # got_jobs = query.main("abc", "123")
     # print(got_jobs)
@@ -80,7 +78,7 @@ def main(*args):
     dirmade = os.popen(f'mkdir -p {job_path} {job_path}slices {job_path}crops {job_path}results {job_path}markup && ls {job_path}')
     madedir = dirmade.read().replace('\n', ' ')
     print(f"Initialized Artifact Directories {madedir}")
-    """
+    # """
     Jobs.update_status(job_id, 'CONVERTING')
     print(f'Job {job_id} CONVERTING')
     converted_files = convert.main(job_id, pdf_path)
@@ -92,8 +90,8 @@ def main(*args):
     print(f"Sliced Path {sliced_path}")
     print(f'\nFinished Slicing {sliced_path}\n')
     # """
-    sliced_path = job_path+"slices"
-    """
+    # sliced_path = job_path+"slices"
+    # """
     Jobs.update_status(job_id, 'ANALYZING')
     print(f'Job {job_id} ANALYZING')
     if debug_flag:
@@ -113,7 +111,7 @@ def main(*args):
     for results_file in glob.iglob(f'{results_path}/*.json'):
         cropped_values = crop.main(job_id, results_file.rstrip())
     print(f'\nFinished Cropping {job_id}\n')
-    """
+    # """
     Jobs.update_status(job_id, 'EXTRACTING')
     print(f'Job {job_id} EXTRACTING')
     print(f'Extracting Values for {job_id}')
