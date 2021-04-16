@@ -47,9 +47,9 @@ def main(*args):
             tag = prediction['tagName']
             tagId = prediction['tagId']
 
-            left = int(boundingBox['left'] * 616) + int(boundingBox['width'] * 616) # - 5
+            left = int(boundingBox['left'] * 616) + int(boundingBox['width'] * 616) + 5
             top = int(boundingBox['top'] * 600) # - 5
-            width = int(boundingBox['width'] * 616) * 4
+            width = int(boundingBox['width'] * 616) * 5
             height = int(boundingBox['height'] * 600) # + 10
 
             result_slice = results_file.replace("results", "slices").replace(".json", ".png")
@@ -61,13 +61,14 @@ def main(*args):
             crop_data = (job_id, crop_image_file, left, top, width, height)
             collect_crops.append(crop_data)
 
+            tag_bb = json.dumps(boundingBox)
             val_bb = json.dumps({
                 'left': left,
                 'top': top,
                 'width': width,
                 'height': height,
             })
-            results_data = (job_id, index, tag, probability, json.dumps(boundingBox), result_slice_file, None, None, val_bb)
+            results_data = (job_id, index, tag, probability, tag_bb, result_slice_file, None, None, val_bb)
             collect_results.append(results_data)
 
             cmd_convert = "magick convert "+result_slice+" +repage -set filename:base '%[basename]' -crop "

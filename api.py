@@ -15,16 +15,18 @@ def statusFormat(value):
 
 @app.route("/")
 def index():
-    message = "Yabs"
+    message = "Jobs"
     jobs = Jobs.list_jobs()
     return render_template('index.html', message=message, jobs=jobs)
 
 @app.route("/job/<string:job_id>")
 def job(job_id):
-    message = f"Yab {job_id}"
+    message = f"Job {job_id}"
     job = Jobs.find(job_id)
     results = Results.find(job_id)
-    return render_template('job.html', message=message, job=job, results=results)
+    images = sorted(glob.iglob(f'export/artifacts/{job_id}/*.png'))
+    redline_path = 'pdf_path.replace("pdfs", "export/redlines").replace(".pdf", "_markup.pdf")'
+    return render_template('job.html', message=message, job=job, results=results, images=images, pdf_path=redline_path)
 
 
 
