@@ -47,7 +47,7 @@ def main(*args):
             tag = prediction['tagName']
             tagId = prediction['tagId']
 
-            left = int(boundingBox['left'] * 616) + int(boundingBox['width'] * 616) + 5
+            left = int(boundingBox['left'] * 616) + int(boundingBox['width'] * 616) + 2
             top = int(boundingBox['top'] * 600) # - 5
             width = int(boundingBox['width'] * 616) * 5
             height = int(boundingBox['height'] * 600) # + 10
@@ -75,7 +75,7 @@ def main(*args):
             cmd_crop += f" && {cmd_convert}{str(width)}x{str(height)}+{str(left)}+{str(top)} +repage -resize x600 +repage -sharpen 0x5.0 +repage {cmd_filename}{tag}_{str(index)}.png"
 
         # print(cmd_crop)
-        ret = os.popen(f'{cmd_crop} > /dev/null')
+        ret = os.popen(f'{cmd_crop}')
         wat = ret.read()
         # print(wat)
 
