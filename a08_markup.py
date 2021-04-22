@@ -22,11 +22,8 @@ def main(*args):
         for result in results:
 
             symbol = result['symbol']
-
-            if markup_symbol_flag:
-                if markup_symbol_flag != symbol:
-                    continue
-                redline_file_suffix += f'_{markup_symbol_flag}'
+            if markup_symbol_flag and markup_symbol_flag != symbol:
+                continue
 
             # if result["slice_file"] != '715-022382-001_a-000_slice_2-1':
             # if result["slice_file"] != '715-022382-001_a-000_slice_1-2' and result["slice_file"] != '715-022382-001_a-000_slice_1-3':
@@ -123,6 +120,8 @@ def main(*args):
         wat = ret.read()
         # print(wat)
     
+    if markup_symbol_flag:
+        redline_file_suffix += f'_{markup_symbol_flag}'
     output_markup_file_path = f'{job_path}markup/{job_id}{redline_file_suffix}.pdf'
     pdf_cmd = f"magick {job_path}markup/*.png {output_markup_file_path}"
     ret = os.popen(f'{pdf_cmd}')
