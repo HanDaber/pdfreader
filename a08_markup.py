@@ -9,6 +9,7 @@ def main(*args):
 
     job_id = args[0]
     job_path = args[1]
+    markup_symbol_flag = args[2]
 
     results = Results.find(job_id)
 
@@ -19,6 +20,13 @@ def main(*args):
         cmd = f'magick convert {page_file}'
 
         for result in results:
+
+            symbol = result['symbol']
+
+            if markup_symbol_flag:
+                if markup_symbol_flag != symbol:
+                    continue
+                redline_file_suffix += f'_{markup_symbol_flag}'
 
             # if result["slice_file"] != '715-022382-001_a-000_slice_2-1':
             # if result["slice_file"] != '715-022382-001_a-000_slice_1-2' and result["slice_file"] != '715-022382-001_a-000_slice_1-3':
@@ -31,7 +39,6 @@ def main(*args):
             page_file_page = page_file.split(job_path)[1].replace(".png", "")
 
             if page == page_file_page:
-                symbol = result['symbol']
                 symbol_probability = result['symbol_probability']
                 symbol_bounding_box = json.loads(result['symbol_bounding_box'])
                 sym_bb_left = symbol_bounding_box["left"]

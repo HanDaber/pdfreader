@@ -43,10 +43,19 @@ def main(*args):
     a06_skip_flag = ('--skip-6' in FLAGS or '-6' in FLAGS) or False
     a07_skip_flag = ('--skip-7' in FLAGS or '-7' in FLAGS) or False
     a08_skip_flag = ('--skip-8' in FLAGS or '-8' in FLAGS) or False
+    
+    markup_symbol_flag = False
+    markup_symbol_flag_matches = [x for x in FLAGS if '--markup-symbol=' in x]
+    if len(markup_symbol_flag_matches) > 0:
+        markup_symbol_flag = markup_symbol_flag_matches[0].split("=")[1].split(" ")[0]
 
-    print(f'Flags: --force={force_flag}, --debug={debug_flag}')
+    print(f'force_flag: "{force_flag}"')
+    print(f'debug_flag: "{debug_flag}"')
+    print(f'open_flag: "{open_flag}"')
+    print(f'markup_symbol_flag: "{markup_symbol_flag}"')
 
     try:
+        # try a better query
         Jobs.insert((datetime.now(), job_id, 'PENDING', 10, 5.00))
         # Jobs.hydrate()
     except:
@@ -54,7 +63,7 @@ def main(*args):
         if not force_flag:
             print("Aborting")
             return False
-    
+
     # all_jobs = Jobs.list_jobs()
     # print(f'All Jobs: {all_jobs}')
 
@@ -122,7 +131,7 @@ def main(*args):
     if a08_skip_flag:
         print("\nNOOP\n")
     else:
-        marked_up_drawings_file_path = markup.main(job_id, job_path)
+        marked_up_drawings_file_path = markup.main(job_id, job_path, markup_symbol_flag)
         print(f'\nFinished Redlining Drawings {marked_up_drawings_file_path}\n')
 
     Jobs.update_status(job_id, 'COMPLETE')
