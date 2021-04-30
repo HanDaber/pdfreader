@@ -88,7 +88,7 @@ def main(*args):
                 val_bb_width = value_bounding_box["width"]
                 val_bb_height = value_bounding_box["height"]
                 
-                text = f" '*{result_legend_index}: {symbol} ({symbol_probability}) "
+                text = f" '*{result_legend_index}: {symbol} ({int(symbol_probability * 100)}%) "
                 if value is None:
                     text += "\nValue: Unknown' "
                 else:
@@ -103,7 +103,7 @@ def main(*args):
                     legend_text_left = 15
                     legend_text_top = 75 * result_legend_index
                 else:
-                    legend_text_left = 3400 - 375
+                    legend_text_left = 3400 - 280
                     legend_text_top = 75 * (result_legend_index - 27)
 
                 asterisk_text_left_translate = str(random.randint(0, 150))

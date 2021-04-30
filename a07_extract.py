@@ -6,18 +6,20 @@ import ResultsDB as Results
 # update to add values
 
 def main(*args):
-    print(f"Extract Symbols & Values for Job {' '.join(args)}")
+    print(f"Extract Symbols & Values for Job {' '.join(args[:2])}")
 
     job_id = args[0]
     job_path = args[1]
+    character_list = args[2]
+
+    tesseract_config = 'quiet tsv'
+    if character_list:
+        tesseract_config = f'-c tessedit_char_whitelist={character_list} {tesseract_config}'
 
     results = Results.find(job_id)
 
     filelist = os.popen("ls "+job_path+"crops/ | grep '.png'")
     for index, image_file in enumerate(filelist):
-
-        # if index != 13:
-        #     continue
 
         image_file_name = image_file.rstrip()
         job_file = job_path+"crops/"+image_file_name
@@ -27,10 +29,7 @@ def main(*args):
 
         matched_results = [result for result in results if result['slice_file'] in image_file_name and result['symbol'] == tag and result['symbol_id'] == tag_index]
 
-        cmd = f'tesseract {job_file} {job_path}results/result_{str(index)}_{image_file_name} --oem 1 --psm 6 --dpi 300 -c tessedit_char_whitelist=.0123456789 quiet tsv'
-        # cmd = f'tesseract {job_file} {job_path}results/result_{str(index)}_{image_file_name} --oem 1 --psm 6 --dpi 300 -c tessedit_char_whitelist=.0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ quiet tsv'
-        # cmd = f'tesseract {job_file} {job_path}results/result_{str(index)}_{image_file_name} --oem 1 --psm 6 --dpi 300 -c quiet tsv'
-        # print(f"Command: {cmd}\n")
+        cmd = f'tesseract {job_file} {job_path}results/result_{str(index)}_{image_file_name} --oem 1 --psm 6 --dpi 300 {tesseract_config}'
 
         ret = os.popen(f'{cmd}')
         wat = ret.read().rstrip().lstrip().split('\n')

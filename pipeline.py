@@ -48,11 +48,17 @@ def main(*args):
     markup_symbol_flag_matches = [x for x in FLAGS if '--markup-symbol=' in x]
     if len(markup_symbol_flag_matches) > 0:
         markup_symbol_flag = markup_symbol_flag_matches[0].split("=")[1].split(" ")[0]
+    
+    character_list_flag = False
+    character_list_flag_matches = [x for x in FLAGS if '--character-list=' in x]
+    if len(character_list_flag_matches) > 0:
+        character_list_flag = character_list_flag_matches[0].split("=")[1].split(" ")[0]
 
     print(f'force_flag: "{force_flag}"')
     print(f'debug_flag: "{debug_flag}"')
     print(f'open_flag: "{open_flag}"')
     print(f'markup_symbol_flag: "{markup_symbol_flag}"')
+    print(f'character_list_flag: "{character_list_flag}"')
 
     try:
         # try a better query
@@ -122,7 +128,7 @@ def main(*args):
     if a07_skip_flag:
         print("\nNOOP\n")
     else:
-        extracted_values = extract.main(job_id, job_path)
+        extracted_values = extract.main(job_id, job_path, character_list_flag)
         print(f'\nFinished Extracting Values {extracted_values}\n')
 
     Jobs.update_status(job_id, 'REDLINING')
