@@ -5,7 +5,7 @@ import sys, os, glob, json, time, random
 import ResultsDB as Results
 
 def main(*args):
-    print(f"Markup Symbols & Values for Job {' '.join(args)}")
+    print(f"Markup Symbols & Values for Job {' '.join(args[:2])}")
 
     job_id = args[0]
     job_path = args[1]
@@ -14,7 +14,7 @@ def main(*args):
     results = Results.find(job_id)
 
     redline_file_suffix = '_redline'
-    
+
     for page_file in glob.iglob(f'{job_path}/*.png'):
 
         cmd = f'magick convert {page_file}'
@@ -22,13 +22,10 @@ def main(*args):
         for result in results:
 
             symbol = result['symbol']
+            if symbol == 'position':
+                continue
             if markup_symbol_flag and markup_symbol_flag != symbol:
                 continue
-
-            # if result["slice_file"] != '715-022382-001_a-000_slice_2-1':
-            # if result["slice_file"] != '715-022382-001_a-000_slice_1-2' and result["slice_file"] != '715-022382-001_a-000_slice_1-3':
-            # if result["slice_file"] != '715-022382-001_a-000_slice_2-1' and result["slice_file"] != '715-022382-001_a-000_slice_1-2' and result["slice_file"] != '715-022382-001_a-000_slice_1-3':
-                # continue
 
             page = result["slice_file"].split("_slice_")[0]
             page_row = int(result["slice_file"].split("_slice_")[1].split("-")[0])
@@ -78,9 +75,6 @@ def main(*args):
                 right = int(left + (sym_bb_width * 616))
                 bottom = int(top + (sym_bb_height * 600))
 
-                # text_left = str(left) # '-75' if (symbol_bounding_box['left'] > 0.33) else '75'
-                # text_top = str(top) # '-45' if (symbol_bounding_box['top'] > 0.33) else '75'
-
                 value = result['value']
                 value_probability = result['value_probability']
                 value_bounding_box = json.loads(result['value_bounding_box'])
@@ -98,8 +92,8 @@ def main(*args):
                     else:
                         text += f"\nValue: {value} ({value_probability})' "
                 
-                randy_int = lambda: random.randint(0,255)
-                randy_hex_color = '#%02X%02X%02X' % (randy_int(),randy_int(),randy_int())
+                randy_int = lambda: random.randint(0, 255)
+                randy_hex_color = '#%02X%02X%02X' % (randy_int(), randy_int(), randy_int())
                 # text_color = invert_color(randy_hex_color)
 
                 draw_val_box = f'{left + sym_bb_width},{top} {left + sym_bb_width + val_bb_width},{top + val_bb_height}'
@@ -142,7 +136,7 @@ def invert_color(hex_code):
     g = int(hex_code[2:4], 16)
     b = int(hex_code[4:6], 16)
 
-    # // http://stackoverflow.com/a/3943023/112731
+    # http://stackoverflow.com/a/3943023/112731
     if (r * 0.299 + g * 0.587 + b * 0.114) > 186:
         return '#000000'
     else:

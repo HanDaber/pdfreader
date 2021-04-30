@@ -70,9 +70,11 @@ def main(*args):
             })
             results_data = (job_id, index, tag, probability, tag_bb, result_slice_file, None, None, val_bb)
             collect_results.append(results_data)
+            # image_tweak_options = '-resize x600 +repage -sharpen 0x5.0'
+            image_tweak_options = '-density 300 +repage -sharpen 0x5.0'
 
             cmd_convert = "magick convert "+result_slice+" +repage -set filename:base '%[basename]' -crop "
-            cmd_crop += f" && {cmd_convert}{str(width)}x{str(height)}+{str(left)}+{str(top)} +repage -resize x600 +repage -sharpen 0x5.0 +repage {cmd_filename}{tag}_{str(index)}.png"
+            cmd_crop += f" && {cmd_convert}{str(width)}x{str(height)}+{str(left)}+{str(top)} +repage {image_tweak_options} +repage {cmd_filename}{tag}_{str(index)}.png"
 
         # print(cmd_crop)
         ret = os.popen(f'{cmd_crop}')

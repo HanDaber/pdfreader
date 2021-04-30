@@ -124,3 +124,6 @@
   sudo ./autogen.sh
   sudo make
   sudo make install
+
+
+# open ports and set up api server

@@ -28,6 +28,8 @@ def main(*args):
         matched_results = [result for result in results if result['slice_file'] in image_file_name and result['symbol'] == tag and result['symbol_id'] == tag_index]
 
         cmd = f'tesseract {job_file} {job_path}results/result_{str(index)}_{image_file_name} --oem 1 --psm 6 --dpi 300 -c tessedit_char_whitelist=.0123456789 quiet tsv'
+        # cmd = f'tesseract {job_file} {job_path}results/result_{str(index)}_{image_file_name} --oem 1 --psm 6 --dpi 300 -c tessedit_char_whitelist=.0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ quiet tsv'
+        # cmd = f'tesseract {job_file} {job_path}results/result_{str(index)}_{image_file_name} --oem 1 --psm 6 --dpi 300 -c quiet tsv'
         # print(f"Command: {cmd}\n")
 
         ret = os.popen(f'{cmd}')
