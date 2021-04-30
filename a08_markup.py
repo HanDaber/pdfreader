@@ -19,7 +19,7 @@ def main(*args):
 
         cmd = f'magick convert {page_file}'
 
-        result_legend_index = 25
+        result_legend_index = 0
 
         for result in results:
 
@@ -103,7 +103,7 @@ def main(*args):
                     _text_left = 15
                     _text_top = 75 * result_legend_index
                 else:
-                    _text_left = 3400 - 250
+                    _text_left = 3400 - 375
                     _text_top = 75 * (result_legend_index - 27)
 
                 randy_hex_color = '#%02X%02X%02X' % (randy_int(), randy_int(), randy_int())
