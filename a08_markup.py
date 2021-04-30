@@ -19,7 +19,7 @@ def main(*args):
 
         cmd = f'magick convert {page_file}'
 
-        result_legend_index = 0
+        result_legend_index = 25
 
         for result in results:
 
@@ -96,6 +96,15 @@ def main(*args):
                         text += f"\nValue: {value}' "
                     else:
                         text += f"\nValue: {value} ({value_probability})' "
+                
+                _text_left = 0
+                _text_top = 0
+                if result_legend_index <= 27:
+                    _text_left = 15
+                    _text_top = 75 * result_legend_index
+                else:
+                    _text_left = 3400 - 250
+                    _text_top = 75 * (result_legend_index - 27)
 
                 randy_hex_color = '#%02X%02X%02X' % (randy_int(), randy_int(), randy_int())
                 # text_color = invert_color(randy_hex_color)
@@ -105,7 +114,7 @@ def main(*args):
                 redline_text_font = f'fill {randy_hex_color} stroke {randy_hex_color} stroke-width 1 font-size 30'
                 # # redline_text_area = f' fill red stroke red stroke-width 1 font-size 18 translate {text_left},{text_top} text {left},{top} {text}"'
                 # # redline_text_area = f' fill {randy_hex_color} stroke {randy_hex_color} stroke-width 1 font-size 16 translate {text_left},{text_top} text {left},{top} {text}"'
-                redline_text_area = f' {redline_text_font} text {15},{75 * result_legend_index} {text}'
+                redline_text_area = f' {redline_text_font} text {_text_left},{_text_top} {text}'
                 redline_area_asterisk = f' {redline_text_font} text {left},{top} \'*{result_legend_index}\''
 
                 cmd += f' +repage -draw "'
