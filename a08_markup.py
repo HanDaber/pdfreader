@@ -19,6 +19,8 @@ def main(*args):
 
         cmd = f'magick convert {page_file}'
 
+        result_legend_index = 0
+
         for result in results:
 
             symbol = result['symbol']
@@ -33,6 +35,9 @@ def main(*args):
             page_file_page = page_file.split(job_path)[1].replace(".png", "")
 
             if page == page_file_page:
+
+                result_legend_index += 1
+
                 symbol_probability = result['symbol_probability']
                 symbol_bounding_box = json.loads(result['symbol_bounding_box'])
                 sym_bb_left = symbol_bounding_box["left"]
@@ -83,30 +88,32 @@ def main(*args):
                 val_bb_width = value_bounding_box["width"]
                 val_bb_height = value_bounding_box["height"]
                 
-                text = f" 'Tag: {symbol} ({symbol_probability}) "
+                text = f" '*{result_legend_index}: {symbol} ({symbol_probability}) "
                 if value is None:
                     text += "\nValue: Unknown' "
                 else:
                     if value_probability is None:
-                        text += f"\nValue: {value} (Unknown)' "
+                        text += f"\nValue: {value}' "
                     else:
                         text += f"\nValue: {value} ({value_probability})' "
-                
-                randy_int = lambda: random.randint(0, 255)
+
                 randy_hex_color = '#%02X%02X%02X' % (randy_int(), randy_int(), randy_int())
                 # text_color = invert_color(randy_hex_color)
 
                 draw_val_box = f'{left + sym_bb_width},{top} {left + sym_bb_width + val_bb_width},{top + val_bb_height}'
 
-                # redline_text_area = f' fill red stroke red stroke-width 1 font-size 18 translate {text_left},{text_top} text {left},{top} {text}"'
-                redline_text_area = f' fill {randy_hex_color} stroke {randy_hex_color} stroke-width 1 font-size 16 translate {text_left},{text_top} text {left},{top} {text}"'
+                redline_text_font = f'fill {randy_hex_color} stroke {randy_hex_color} stroke-width 1 font-size 30'
+                # # redline_text_area = f' fill red stroke red stroke-width 1 font-size 18 translate {text_left},{text_top} text {left},{top} {text}"'
+                # # redline_text_area = f' fill {randy_hex_color} stroke {randy_hex_color} stroke-width 1 font-size 16 translate {text_left},{text_top} text {left},{top} {text}"'
+                redline_text_area = f' {redline_text_font} text {15},{75 * result_legend_index} {text}'
+                redline_area_asterisk = f' {redline_text_font} text {left},{top} \'*{result_legend_index}\''
 
                 cmd += f' +repage -draw "'
                 # cmd += f' fill rgba(255, 215, 0 , 0.1) stroke red stroke-width 1 roundrectangle {left - 75},{top - 25} {left - 75 + 250},{top - 25 + 75} 5,5'
                 cmd += f' fill none stroke {randy_hex_color} stroke-width 2 roundrectangle {draw_val_box} 3,3'
                 # cmd += f' fill rgba(0, 215, 0 , 0.25) stroke navy stroke-width 1 roundrectangle {draw_val_box} 2,2'
                 cmd += f' fill none stroke {randy_hex_color} stroke-width 2 roundrectangle {left},{top} {right},{bottom} 3,3'
-                cmd += redline_text_area
+                cmd += redline_text_area + redline_area_asterisk + '"'
 
         cmd += f" -set filename:t '%d/markup/%t{redline_file_suffix}' '%[filename:t].png'"
         # print(cmd)
@@ -124,23 +131,26 @@ def main(*args):
 
     return output_markup_file_path
 
-def invert_color(hex_code):
-    if hex_code.startswith('#'):
-        hex_code = hex_code[1:]
+def randy_int():
+    return random.randint(0, 255)
 
-    if len(hex_code) != 6:
-        print('Invalid HEX_code color.')
-        return hex_code
+# def invert_color(hex_code):
+#     if hex_code.startswith('#'):
+#         hex_code = hex_code[1:]
 
-    r = int(hex_code[0:2], 16)
-    g = int(hex_code[2:4], 16)
-    b = int(hex_code[4:6], 16)
+#     if len(hex_code) != 6:
+#         print('Invalid HEX_code color.')
+#         return hex_code
 
-    # http://stackoverflow.com/a/3943023/112731
-    if (r * 0.299 + g * 0.587 + b * 0.114) > 186:
-        return '#000000'
-    else:
-        return '#FFFFFF'
+#     r = int(hex_code[0:2], 16)
+#     g = int(hex_code[2:4], 16)
+#     b = int(hex_code[4:6], 16)
+
+#     # http://stackoverflow.com/a/3943023/112731
+#     if (r * 0.299 + g * 0.587 + b * 0.114) > 186:
+#         return '#000000'
+#     else:
+#         return '#FFFFFF'
 
 
 if __name__ == '__main__':

@@ -51,7 +51,7 @@ def main(*args):
 
                     try:
                         text = result_dict["text"]
-                        if text.startswith('0'):
+                        if text.startswith('0') and not text.contains('.'):
                             text = f'.{text}'
                         if text.endswith('.'):
                             text = text[:-1]
