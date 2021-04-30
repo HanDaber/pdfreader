@@ -48,35 +48,35 @@ def main(*args):
                 left = ((616 * page_col)) + int((sym_bb_left * 616)) - 50 * (page_col + 1)
                 if (page_col == 0):
                     left += 50
-                    text_left = '100'
+                    text_left = '0'
                 if (page_col == 1):
                     left += 25
-                    text_left = '-100'
+                    text_left = '20'
                 if (page_col == 2):
                     left += 0
-                    text_left = '100'
+                    text_left = '30'
                 if (page_col == 3):
                     left += -25
-                    text_left = '-100'
+                    text_left = '40'
                 if (page_col == 4):
                     left += -50
-                    text_left = '-100'
+                    text_left = '50'
                 if (page_col == 5):
                     left += -75
-                    text_left = '-100'
+                    text_left = '60'
                 top = ((600 * page_row)) + int((sym_bb_top * 600)) - 50 * (page_row + 1)
                 if (page_row == 0):
                     top += 50
-                    text_top = '55'
+                    text_top = '0'
                 if (page_row == 1):
                     top += 25
-                    text_top = '-30'
+                    text_top = '0'
                 if (page_row == 2):
                     top += 0
-                    text_top = '55'
+                    text_top = '0'
                 if (page_row == 3):
                     top += -25
-                    text_top = '-30'
+                    text_top = '0'
                 right = int(left + (sym_bb_width * 616))
                 bottom = int(top + (sym_bb_height * 600))
 
@@ -97,14 +97,17 @@ def main(*args):
                     else:
                         text += f"\nValue: {value} ({value_probability})' "
                 
-                _text_left = 0
-                _text_top = 0
+                legend_text_left = 0
+                legend_text_top = 0
                 if result_legend_index <= 27:
-                    _text_left = 15
-                    _text_top = 75 * result_legend_index
+                    legend_text_left = 15
+                    legend_text_top = 75 * result_legend_index
                 else:
-                    _text_left = 3400 - 375
-                    _text_top = 75 * (result_legend_index - 27)
+                    legend_text_left = 3400 - 375
+                    legend_text_top = 75 * (result_legend_index - 27)
+
+                asterisk_text_left_translate = str(random.randint(0, 150))
+                asterisk_text_top_translate = '-5'
 
                 randy_hex_color = '#%02X%02X%02X' % (randy_int(), randy_int(), randy_int())
                 # text_color = invert_color(randy_hex_color)
@@ -114,15 +117,14 @@ def main(*args):
                 redline_text_font = f'fill {randy_hex_color} stroke {randy_hex_color} stroke-width 1 font-size 30'
                 # # redline_text_area = f' fill red stroke red stroke-width 1 font-size 18 translate {text_left},{text_top} text {left},{top} {text}"'
                 # # redline_text_area = f' fill {randy_hex_color} stroke {randy_hex_color} stroke-width 1 font-size 16 translate {text_left},{text_top} text {left},{top} {text}"'
-                redline_text_area = f' {redline_text_font} text {_text_left},{_text_top} {text}'
-                redline_area_asterisk = f' {redline_text_font} text {left},{top} \'*{result_legend_index}\''
+                redline_text_area = f' {redline_text_font} text {legend_text_left},{legend_text_top} {text}'
+                redline_area_asterisk = f' {redline_text_font} translate {asterisk_text_left_translate},{asterisk_text_top_translate} text {left},{top} \'*{result_legend_index}\''
 
-                cmd += f' +repage -draw "'
-                # cmd += f' fill rgba(255, 215, 0 , 0.1) stroke red stroke-width 1 roundrectangle {left - 75},{top - 25} {left - 75 + 250},{top - 25 + 75} 5,5'
+                cmd += f' +repage -draw "' # note - important opening double quote
                 cmd += f' fill none stroke {randy_hex_color} stroke-width 2 roundrectangle {draw_val_box} 3,3'
-                # cmd += f' fill rgba(0, 215, 0 , 0.25) stroke navy stroke-width 1 roundrectangle {draw_val_box} 2,2'
                 cmd += f' fill none stroke {randy_hex_color} stroke-width 2 roundrectangle {left},{top} {right},{bottom} 3,3'
-                cmd += redline_text_area + redline_area_asterisk + '"'
+                cmd += f' fill none stroke {randy_hex_color} stroke-width 2 line {left},{top} {legend_text_left + 75},{legend_text_top + 10}'
+                cmd += redline_text_area + redline_area_asterisk + '"' # note - important closing double quote
 
         cmd += f" -set filename:t '%d/markup/%t{redline_file_suffix}' '%[filename:t].png'"
         # print(cmd)

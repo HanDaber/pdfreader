@@ -125,5 +125,14 @@
   sudo make
   sudo make install
 
+  cd /opt
+  sudo wget https://download.savannah.gnu.org/releases/freetype/freetype-2.9.tar.gz
+  sudo tar -xvzf freetype-2.9.tar.gz
+  sudo chmod go+rx freetype-2.9
+  cd freetype-2.9
+  sudo ./autogen.sh
+  sudo make
+  sudo make install
+
 
 # open ports and set up api server
