@@ -47,7 +47,7 @@ def main(*args):
             tag = prediction['tagName']
             tagId = prediction['tagId']
 
-            left = int(boundingBox['left'] * 616) + int(boundingBox['width'] * 616) + 2
+            left = int(boundingBox['left'] * 616) + int(boundingBox['width'] * 616)
             top = int(boundingBox['top'] * 600) # - 5
             width = int(boundingBox['width'] * 616) * 5
             height = int(boundingBox['height'] * 600) # + 10
