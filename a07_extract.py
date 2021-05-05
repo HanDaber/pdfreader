@@ -50,10 +50,13 @@ def main(*args):
 
                     try:
                         text = result_dict["text"]
+                        count = text.count('.') - 1
+
                         if text.endswith('.'):
                             text = text[:-1]
                         if text.startswith('0') and '.' not in text:
                             text = f'.{text}'
+                        text = text.rsplit('.', count)[0]
                             
                         # print(f'Try: {text}')
                         value = float(text)
@@ -63,10 +66,10 @@ def main(*args):
                             Results.add_value(match['rowid'], value) #, val_prob, val_bb)
                 
                     except KeyError as keyErr:
-                        # print(f'\n\tCaught KeyError: {keyErr}')
+                        # print(f'\n\tCaught KeyError for {result_dict}: {keyErr}')
                         pass
                     except ValueError as valErr:
-                        print(f'\n\tCaught ValueError: {valErr}')
+                        print(f'\n\tCaught ValueError for {result_dict["text"]}: {valErr}')
                         pass
 
 def format_value(v):

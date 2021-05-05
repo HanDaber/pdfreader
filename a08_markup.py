@@ -1,6 +1,6 @@
 # mark up values with imagemagick
 
-import sys, os, glob, json, time, random
+import sys, os, glob, json, time, random, datetime
 
 import ResultsDB as Results
 
@@ -14,6 +14,11 @@ def main(*args):
     results = Results.find(job_id)
 
     redline_file_suffix = '_redline'
+    if markup_symbol_flag:
+        redline_file_suffix += f'_{markup_symbol_flag}'
+
+    now = datetime.datetime.now()
+    dt_string = now.strftime("%d_%m_%Y-%H_%M_%S")
 
     for page_file in glob.iglob(f'{job_path}/*.png'):
 
@@ -48,35 +53,35 @@ def main(*args):
                 left = ((616 * page_col)) + int((sym_bb_left * 616)) - 50 * (page_col + 1)
                 if (page_col == 0):
                     left += 50
-                    text_left = '0'
+                    text_left = '-50'
                 if (page_col == 1):
                     left += 25
-                    text_left = '20'
+                    text_left = '150'
                 if (page_col == 2):
                     left += 0
-                    text_left = '30'
+                    text_left = '50'
                 if (page_col == 3):
                     left += -25
-                    text_left = '40'
+                    text_left = '-150'
                 if (page_col == 4):
                     left += -50
-                    text_left = '50'
+                    text_left = '150'
                 if (page_col == 5):
                     left += -75
-                    text_left = '60'
+                    text_left = '50'
                 top = ((600 * page_row)) + int((sym_bb_top * 600)) - 50 * (page_row + 1)
                 if (page_row == 0):
                     top += 50
-                    text_top = '0'
+                    text_top = '60'
                 if (page_row == 1):
                     top += 25
-                    text_top = '0'
+                    text_top = '-30'
                 if (page_row == 2):
                     top += 0
-                    text_top = '0'
+                    text_top = '60'
                 if (page_row == 3):
                     top += -25
-                    text_top = '0'
+                    text_top = '-30'
                 right = int(left + (sym_bb_width * 616))
                 bottom = int(top + (sym_bb_height * 600))
 
@@ -88,7 +93,8 @@ def main(*args):
                 val_bb_width = value_bounding_box["width"]
                 val_bb_height = value_bounding_box["height"]
                 
-                text = f" '*{result_legend_index}: {symbol} ({int(symbol_probability * 100)}%) "
+                # text = f" '*{result_legend_index}: {symbol} ({int(symbol_probability * 100)}%) "
+                text = f" 'Tag: {symbol} ({int(symbol_probability * 100)}%) "
                 if value is None:
                     text += "\nValue: Unknown' "
                 else:
@@ -97,45 +103,44 @@ def main(*args):
                     else:
                         text += f"\nValue: {value} ({value_probability})' "
                 
-                legend_text_left = 0
-                legend_text_top = 0
-                if result_legend_index <= 27:
-                    legend_text_left = 15
-                    legend_text_top = 75 * result_legend_index
-                else:
-                    legend_text_left = 3400 - 280
-                    legend_text_top = 75 * (result_legend_index - 27)
+                # legend_text_left = 0
+                # legend_text_top = 0
+                # if result_legend_index <= 27:
+                #     legend_text_left = 15
+                #     legend_text_top = 75 * result_legend_index
+                # else:
+                #     legend_text_left = 3400 - 280
+                #     legend_text_top = 75 * (result_legend_index - 27)
 
-                asterisk_text_left_translate = str(random.randint(0, 150))
-                asterisk_text_top_translate = '-5'
+                # asterisk_text_left_translate = str(random.randint(0, 150))
+                # asterisk_text_top_translate = '-5'
 
                 randy_hex_color = '#%02X%02X%02X' % (randy_int(), randy_int(), randy_int())
                 # text_color = invert_color(randy_hex_color)
 
                 draw_val_box = f'{left + sym_bb_width},{top} {left + sym_bb_width + val_bb_width},{top + val_bb_height}'
 
-                redline_text_font = f'fill {randy_hex_color} stroke {randy_hex_color} stroke-width 1 font-size 30'
-                # # redline_text_area = f' fill red stroke red stroke-width 1 font-size 18 translate {text_left},{text_top} text {left},{top} {text}"'
-                # # redline_text_area = f' fill {randy_hex_color} stroke {randy_hex_color} stroke-width 1 font-size 16 translate {text_left},{text_top} text {left},{top} {text}"'
-                redline_text_area = f' {redline_text_font} text {legend_text_left},{legend_text_top} {text}'
-                redline_area_asterisk = f' {redline_text_font} translate {asterisk_text_left_translate},{asterisk_text_top_translate} text {left},{top} \'*{result_legend_index}\''
+                redline_text_font = f'fill {randy_hex_color} stroke {randy_hex_color} stroke-width 1 font-size 20'
+                redline_text_area = f' {redline_text_font} translate {text_left},{text_top} text {left},{top} {text}'
+                # redline_text_area = f' {redline_text_font} text {legend_text_left},{legend_text_top} {text}'
+                # redline_area_asterisk = f' {redline_text_font} translate {asterisk_text_left_translate},{asterisk_text_top_translate} text {left},{top} \'*{result_legend_index}\''
 
                 cmd += f' +repage -draw "' # note - important opening double quote
                 cmd += f' fill none stroke {randy_hex_color} stroke-width 2 roundrectangle {draw_val_box} 3,3'
                 cmd += f' fill none stroke {randy_hex_color} stroke-width 2 roundrectangle {left},{top} {right},{bottom} 3,3'
-                cmd += f' fill none stroke {randy_hex_color} stroke-width 2 line {left},{top} {legend_text_left + 75},{legend_text_top + 10}'
-                cmd += redline_text_area + redline_area_asterisk + '"' # note - important closing double quote
+                # cmd += f' fill none stroke {randy_hex_color} stroke-width 2 line {left},{top} {left + int(text_left)},{top + int(text_top)}'
+                # cmd += f' fill none stroke {randy_hex_color} stroke-width 2 line {left},{top} {legend_text_left + 75},{legend_text_top + 10}'
+                # cmd += redline_text_area + redline_area_asterisk + '"' # note - important closing double quote
+                cmd += redline_text_area + '"' # note - important closing double quote
 
-        cmd += f" -set filename:t '%d/markup/%t{redline_file_suffix}' '%[filename:t].png'"
+        cmd += f" -set filename:t '%d/markup/%t{redline_file_suffix}_{dt_string}' '%[filename:t].png'"
         # print(cmd)
         ret = os.popen(f'{cmd}')
         wat = ret.read()
         # print(wat)
-    
-    if markup_symbol_flag:
-        redline_file_suffix += f'_{markup_symbol_flag}'
-    output_markup_file_path = f'{job_path}markup/{job_id}{redline_file_suffix}.pdf'
-    pdf_cmd = f"magick {job_path}markup/*.png {output_markup_file_path}"
+
+    output_markup_file_path = f'{job_path}markup/{job_id}{redline_file_suffix}_{dt_string}.pdf'
+    pdf_cmd = f"magick {job_path}markup/*{redline_file_suffix}_{dt_string}.png {output_markup_file_path}"
     ret = os.popen(f'{pdf_cmd}')
     wat = ret.read()
     # print(wat)
@@ -143,7 +148,7 @@ def main(*args):
     return output_markup_file_path
 
 def randy_int():
-    return random.randint(0, 255)
+    return random.randint(0, 200)
 
 # def invert_color(hex_code):
 #     if hex_code.startswith('#'):
