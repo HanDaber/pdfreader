@@ -29,7 +29,7 @@ def main(*args):
         for result in results:
 
             symbol = result['symbol']
-            if symbol == 'position':
+            if symbol == 'position' or symbol == 'plusminusvertical':
                 continue
             if markup_symbol_flag and markup_symbol_flag != symbol:
                 continue
