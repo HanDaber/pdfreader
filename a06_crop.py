@@ -47,13 +47,14 @@ def main(*args):
             tag = prediction['tagName']
             tagId = prediction['tagId']
 
-            left = int(boundingBox['left'] * 616) + int(boundingBox['width'] * 616) - 4
+            left = int(boundingBox['left'] * 616) + int(boundingBox['width'] * 616) - 3
             top = int(boundingBox['top'] * 600) # - 5
             width = int(boundingBox['width'] * 616) * 5
             height = int(boundingBox['height'] * 600) # + 10
 
             if tag == 'plusminusvertical':
-                width += 20
+                top -= 10
+                width += 10
                 height += 20
 
             # Only crop and save if its not cut off by too much

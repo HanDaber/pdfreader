@@ -50,41 +50,6 @@ def main(*args):
                 sym_bb_width = symbol_bounding_box["width"]
                 sym_bb_height = symbol_bounding_box["height"]
 
-                left = ((616 * page_col)) + int((sym_bb_left * 616)) - 50 * (page_col + 1)
-                if (page_col == 0):
-                    left += 50
-                    text_left = '-50'
-                if (page_col == 1):
-                    left += 25
-                    text_left = '150'
-                if (page_col == 2):
-                    left += 0
-                    text_left = '50'
-                if (page_col == 3):
-                    left += -25
-                    text_left = '-150'
-                if (page_col == 4):
-                    left += -50
-                    text_left = '150'
-                if (page_col == 5):
-                    left += -75
-                    text_left = '50'
-                top = ((600 * page_row)) + int((sym_bb_top * 600)) - 50 * (page_row + 1)
-                if (page_row == 0):
-                    top += 50
-                    text_top = '60'
-                if (page_row == 1):
-                    top += 25
-                    text_top = '-30'
-                if (page_row == 2):
-                    top += 0
-                    text_top = '60'
-                if (page_row == 3):
-                    top += -25
-                    text_top = '-30'
-                right = int(left + (sym_bb_width * 616))
-                bottom = int(top + (sym_bb_height * 600))
-
                 value = result['value']
                 value_probability = result['value_probability']
                 value_bounding_box = json.loads(result['value_bounding_box'])
@@ -92,6 +57,56 @@ def main(*args):
                 val_bb_top = value_bounding_box["top"]
                 val_bb_width = value_bounding_box["width"]
                 val_bb_height = value_bounding_box["height"]
+
+                left = ((616 * page_col)) + int((sym_bb_left * 616)) - 50 * (page_col + 1)
+                val_left = ((616 * page_col)) + val_bb_left - 50 * (page_col + 1)
+                if (page_col == 0):
+                    left += 50
+                    val_left += 50
+                    text_left = '-50'
+                if (page_col == 1):
+                    left += 25
+                    val_left += 25
+                    text_left = '150'
+                if (page_col == 2):
+                    left += 0
+                    val_left += 0
+                    text_left = '50'
+                if (page_col == 3):
+                    left += -25
+                    val_left += -25
+                    text_left = '-150'
+                if (page_col == 4):
+                    left += -50
+                    val_left += -50
+                    text_left = '150'
+                if (page_col == 5):
+                    left += -75
+                    val_left += -75
+                    text_left = '50'
+                top = ((600 * page_row)) + int((sym_bb_top * 600)) - 50 * (page_row + 1)
+                val_top = ((600 * page_row)) + val_bb_top - 50 * (page_row + 1)
+                if (page_row == 0):
+                    top += 50
+                    val_top += 50
+                    text_top = '60'
+                if (page_row == 1):
+                    top += 25
+                    val_top += 25
+                    text_top = '-30'
+                if (page_row == 2):
+                    top += 0
+                    val_top += 0
+                    text_top = '60'
+                if (page_row == 3):
+                    top += -25
+                    val_top += -25
+                    text_top = '-30'
+                right = int(left + (sym_bb_width * 616))
+                bottom = int(top + (sym_bb_height * 600))
+
+                # print(f'SYM BOX left,top: {left}, {top}')
+                # print(f'VAL BOX left,top: {val_left}, {val_top}')
                 
                 # text = f" '*{result_legend_index}: {symbol} ({int(symbol_probability * 100)}%) "
                 text = f" 'Tag: {symbol} ({int(symbol_probability * 100)}%) "
@@ -118,7 +133,8 @@ def main(*args):
                 randy_hex_color = '#%02X%02X%02X' % (randy_int(), randy_int(), randy_int())
                 # text_color = invert_color(randy_hex_color)
 
-                draw_val_box = f'{left + sym_bb_width},{top} {left + sym_bb_width + val_bb_width},{top + val_bb_height}'
+                # draw_val_box = f'{left + sym_bb_width},{top} {left + sym_bb_width + val_bb_width},{top + val_bb_height}'
+                draw_val_box = f'{val_left},{val_top} {val_left + val_bb_width},{val_top + val_bb_height}'
 
                 redline_text_font = f'fill {randy_hex_color} stroke {randy_hex_color} stroke-width 1 font-size 20'
                 redline_text_area = f' {redline_text_font} translate {text_left},{text_top} text {left},{top} {text}'
