@@ -52,6 +52,10 @@ def main(*args):
             width = int(boundingBox['width'] * 616) * 5
             height = int(boundingBox['height'] * 600) # + 10
 
+            if tag == 'plusminusvertical':
+                width += 20
+                height += 20
+
             # Only crop and save if its not cut off by too much
             if (left + width) > (616 + 100):
                 continue

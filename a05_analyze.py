@@ -9,7 +9,7 @@ def main(*args):
     job_id = args[0]
     job_file = args[1]
 
-    url = 'https://westus2.api.cognitive.microsoft.com/customvision/v3.1/Prediction/f1b76c02-5fc5-4f7d-bb13-2d4b4bc71a27/detect/iterations/Iteration1/image'
+    url = 'https://westus2.api.cognitive.microsoft.com/customvision/v3.0/Prediction/f1b76c02-5fc5-4f7d-bb13-2d4b4bc71a27/detect/iterations/Iteration3/image'
 
     headers = {
         'Content-Type': 'application/octet-stream',
