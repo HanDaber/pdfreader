@@ -63,7 +63,13 @@ def main(*args):
                         # print(f'Value: {value}')
 
                         for match in matched_results:
-                            Results.add_value(match['rowid'], value) #, val_prob, val_bb)
+                            if tag == 'plusminusvertical':
+                                if match['tolerance_plus']:
+                                    Results.add_tolerance(match['rowid'], value, 'minus')
+                                else:
+                                    Results.add_tolerance(match['rowid'], value, 'plus')
+                            else: 
+                                Results.add_value(match['rowid'], value) #, val_prob, val_bb)
                 
                     except KeyError as keyErr:
                         # print(f'\n\tCaught KeyError for {result_dict}: {keyErr}')

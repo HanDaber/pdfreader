@@ -84,7 +84,7 @@ def main(*args):
                 'width': width,
                 'height': height,
             })
-            results_data = (job_id, index, tag, probability, tag_bb, result_slice_file, None, None, val_bb)
+            results_data = (job_id, index, tag, probability, tag_bb, result_slice_file, None, None, val_bb, None, None)
             collect_results.append(results_data)
 
             cmd_convert = "magick convert "+result_slice+" +repage -set filename:base '%[basename]' -crop "

@@ -3,9 +3,9 @@ import sqlite3
 db_name = 'TEST_DB_1'
 table_name = 'results_table_1'
 
-labels = ['row_id', 'job_id',        'symbol_id',            'symbol',        'symbol_probability', 'symbol_bounding_box', 'slice_file', 'value', 'value_probability', 'value_bounding_box']
-types = ['INTEGER', 'TEXT NOT NULL', 'TEXT NOT NULL',        'TEXT NOT NULL', 'REAL',               'TEXT',                'TEXT',       'REAL',  'REAL',              'TEXT']
-value_placeholders = '?,?,?,?,?,?,?,?,?'
+labels = ['row_id', 'job_id',        'symbol_id',            'symbol',        'symbol_probability', 'symbol_bounding_box', 'slice_file', 'value', 'value_probability', 'value_bounding_box', 'tolerance_plus', 'tolerance_minus']
+types = ['INTEGER', 'TEXT NOT NULL', 'TEXT NOT NULL',        'TEXT NOT NULL', 'REAL',               'TEXT',                'TEXT',       'REAL',  'REAL',              'TEXT',               'REAL',           'REAL']
+value_placeholders = '?,?,?,?,?,?,?,?,?,?,?'
 
 def _table():
     return table_name
@@ -46,6 +46,12 @@ def add_value(row_id, value):
         cur = con.cursor()
         # cur.execute(f'UPDATE {table_name} SET value = \'{value}\', value_probability = \'{val_prob}\', value_bounding_box = \'{val_bb}\' WHERE rowid = \'{row_id}\'')
         cur.execute(f'UPDATE {table_name} SET value = \'{value}\' WHERE rowid = \'{row_id}\'')
+        con.commit()
+
+def add_tolerance(row_id, value, plus_or_minus):
+    with sqlite3.connect(f'{db_name}.db') as con:
+        cur = con.cursor()
+        cur.execute(f'UPDATE {table_name} SET tolerance_{plus_or_minus} = \'{value}\' WHERE rowid = \'{row_id}\'')
         con.commit()
 
 def find(job_id):
