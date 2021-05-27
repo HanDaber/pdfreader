@@ -51,8 +51,8 @@ def main(*args):
                 sym_bb_height = symbol_bounding_box["height"]
 
                 value = result['value']
-                if symbol == 'plusminusvertical':
-                    value = f'{result["tolerance_plus"]} \n{result["tolerance_minus"]}'
+                # if symbol == 'plusminusvertical':
+                    # value = f'{result["tolerance_plus"]} \n{result["tolerance_minus"]}'
 
                 value_probability = result['value_probability']
                 value_bounding_box = json.loads(result['value_bounding_box'])

@@ -44,12 +44,17 @@ def main(*args):
                     # print(f"col names {column_names}")
                 else:
                     data = line.split()
-                    # print(f"data line {data}")
+                    if tag == 'plusminusvertical':
+                        print(f"data line {data}")
 
                     result_dict = dict(zip(column_names, data))
 
                     try:
                         text = result_dict["text"]
+                        
+                        # if tag == 'plusminusvertical':
+                            # print(f"text line {text}")
+                        
                         count = text.count('.') - 1
 
                         if text.endswith('.'):
@@ -57,19 +62,25 @@ def main(*args):
                         if text.startswith('0') and '.' not in text:
                             text = f'.{text}'
                         text = text.rsplit('.', count)[0]
-                            
-                        # print(f'Try: {text}')
+                        
+                        # if tag == 'plusminusvertical':
+                            # print(f'Try: {text}')
+                        
                         value = float(text)
                         # print(f'Value: {value}')
 
                         for match in matched_results:
-                            if tag == 'plusminusvertical':
-                                if match['tolerance_plus']:
-                                    Results.add_tolerance(match['rowid'], value, 'minus')
-                                else:
-                                    Results.add_tolerance(match['rowid'], value, 'plus')
-                            else: 
-                                Results.add_value(match['rowid'], value) #, val_prob, val_bb)
+                            # print(tag)
+                            # if tag == 'plusminusvertical':
+                            #     print(tag, value, match['rowid'])
+                            #     if 'tolerance_plus' in match:
+                            #         print(match['rowid'], value, 'minus')
+                            #         Results.add_tolerance(match['rowid'], value, 'minus')
+                            #     else:
+                            #         print(match['rowid'], value, 'plus')
+                            #         Results.add_tolerance(match['rowid'], value, 'plus')
+                            # else: 
+                            Results.add_value(match['rowid'], value) #, val_prob, val_bb)
                 
                     except KeyError as keyErr:
                         # print(f'\n\tCaught KeyError for {result_dict}: {keyErr}')
